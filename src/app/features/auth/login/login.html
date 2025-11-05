@@ -1,0 +1,29 @@
+<section class="login-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-field">
+      <label for="email">E-Mail</label>
+      <input id="email" type="email" formControlName="email" />
+      @if (emailCtrl.invalid && emailCtrl.touched) {
+      <small>Bitte eine gültige E-Mail eingeben</small>
+      }
+    </div>
+
+    <div class="form-field">
+      <label for="password">Passwort</label>
+      <input id="password" type="password" formControlName="password" />
+      @if (passwordCtrl.invalid && passwordCtrl.touched) {
+      <small>Passwort muss mindestens 6 Zeichen haben</small>
+      }
+    </div>
+
+    <button appButton type="submit" [disabled]="loading() || form.invalid">
+      @if (loading()) { Lade ... } @else { Login }
+    </button>
+
+    @if (error()) {
+    <p class="error">{{ error() }}</p>
+    }
+  </form>
+</section>

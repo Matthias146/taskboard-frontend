@@ -1,0 +1,28 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+@use "sass:color";
+
+.btn {
+  @include m.button-reset;
+  padding: v.$btn-padding;
+  border-radius: v.$btn-radius;
+  background-color: v.$primary;
+  color: white;
+  font-weight: 500;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: color.adjust(v.$primary, $lightness: -5%);
+  }
+
+  &.outline {
+    background: transparent;
+    color: v.$primary;
+    border: 2px solid v.$primary;
+
+    &:hover {
+      background: v.$primary;
+      color: white;
+    }
+  }
+}

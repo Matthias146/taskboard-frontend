@@ -1,0 +1,11 @@
+
+@forward 'variables';
+@forward 'mixins';
+@forward 'buttons';
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fff;
+  color: #333;
+  margin: 0;
+}

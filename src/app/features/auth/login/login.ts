@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { Auth } from '../../../core/auth/auth';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Button } from '../../../shared/ui/button/button';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +30,7 @@ export class Login {
     return this.form.controls.password;
   }
 
-  async submit(): Promise<void> {
+  async onSubmit(): Promise<void> {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -40,12 +39,17 @@ export class Login {
     this.loading.set(true);
     this.error.set(null);
 
+    const { email, password } = this.form.getRawValue();
+
     try {
-      const { email, password } = this.form.getRawValue();
       await this.auth.login(email, password);
       await this.router.navigateByUrl('/tasks');
-    } catch {
-      this.error.set('❌ Login fehlgeschlagen. Bitte überprüfe deine Daten.');
+    } catch (err: any) {
+      const msg =
+        err?.error?.message ??
+        err?.message ??
+        '❌ Login fehlgeschlagen. Bitte überprüfe deine Daten.';
+      this.error.set(msg);
     } finally {
       this.loading.set(false);
     }

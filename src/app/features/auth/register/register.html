@@ -1,0 +1,46 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2 class="title">Konto erstellen</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label for="email">E-Mail</label>
+        <input id="email" type="email" formControlName="email" placeholder="E-Mail eingeben" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+        <span class="error">Bitte gültige E-Mail eingeben</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="password">Passwort</label>
+        <input id="password" type="password" formControlName="password" placeholder="Passwort" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+        <span class="error">Mindestens 6 Zeichen</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="confirmPassword">Passwort bestätigen</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Passwort bestätigen"
+        />
+      </div>
+
+      @if (errorMessage()) {
+      <div class="error">{{ errorMessage() }}</div>
+      }
+
+      <button type="submit" [disabled]="isSubmitting() || form.invalid">
+        {{ isSubmitting() ? 'Registriere...' : 'Registrieren' }}
+      </button>
+
+      <div class="login-hint">
+        Bereits ein Konto?
+        <a routerLink="/login">Hier einloggen</a>
+      </div>
+    </form>
+  </div>
+</div>

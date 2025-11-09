@@ -15,6 +15,11 @@ export class Auth {
   isLoggedIn = computed(() => !!this.token());
 
   constructor() {
+    // const storedToken = localStorage.getItem('jwt');
+    // if (storedToken) {
+    //   this.token.set(storedToken);
+    //   this.loadProfile(); // lädt Profil einmalig beim Start
+    // }
     effect(() => {
       const token = this.token();
       if (token) {
@@ -26,30 +31,37 @@ export class Auth {
   }
 
   async login(email: string, password: string): Promise<void> {
-    const res = await firstValueFrom(
-      this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, {
-        email,
-        password,
-      })
-    );
+    try {
+      const res = await firstValueFrom(
+        this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, {
+          email,
+          password,
+        })
+      );
 
-    this.token.set(res.access_token);
-    localStorage.setItem('jwt', res.access_token);
+      if (!res || !res.access_token) {
+        console.error('❌ Kein access_token in der Antwort erhalten:', res);
+        throw new Error('Kein Token erhalten');
+      }
+      if (!res?.access_token) throw new Error('Kein Token erhalten');
+      this.token.set(res.access_token);
+      localStorage.setItem('jwt', res.access_token);
 
-    await this.loadProfile();
-  }
-
-  async register(email: string, password: string): Promise<void> {
-    await firstValueFrom(
-      this.http.post(`${environment.apiUrl}/auth/register`, { email, password })
-    );
+      await this.loadProfile();
+    } catch (error: any) {
+      console.error('❌ Fehler im login():', error);
+      throw error;
+    }
   }
 
   async loadProfile(): Promise<void> {
     try {
       const user = await firstValueFrom(this.http.get<User>(`${environment.apiUrl}/auth/me`));
       this.user.set(user);
-    } catch {
+    } catch (error) {
+      console.error('❌ Fehler in loadProfile():', error);
+      console.error('🔍 Token im Signal:', this.token());
+      console.error('🔍 Token im LocalStorage:', localStorage.getItem('jwt'));
       this.logout();
     }
   }

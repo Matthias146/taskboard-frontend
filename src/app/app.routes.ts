@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { Login } from './features/auth/login/login';
 import { Register } from './features/auth/register/register';
-import { Tasks } from './features/tasks/tasks/tasks';
+import { TasksBoard } from './features/tasks/ui/tasks-board/tasks-board';
 import { AuthGuard } from './core/guards/auth-guard';
 import { GuestGuard } from './core/guards/guest-guard';
 import { Layout } from './core/layout/layout';
+import { Dashboard } from './features/dashboard/dashboard';
 
 export const routes: Routes = [
   {
@@ -25,7 +26,11 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     canActivate: [AuthGuard],
-    children: [{ path: 'tasks', component: Tasks, title: 'Deine Tasks' }],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'tasks', component: TasksBoard, title: 'Deine Tasks' },
+      { path: 'dashboard', component: Dashboard, title: 'Dashboard' },
+    ],
   },
 
   { path: '**', redirectTo: 'login' },

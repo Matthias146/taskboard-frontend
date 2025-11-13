@@ -43,7 +43,7 @@ export class Login {
 
     try {
       await this.auth.login(email, password);
-      await this.router.navigateByUrl('/tasks');
+      await this.router.navigateByUrl('/dashboard');
     } catch (err: any) {
       const msg =
         err?.error?.message ??

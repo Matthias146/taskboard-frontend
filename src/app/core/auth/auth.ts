@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
   private http = inject(HttpClient);
-
+  private router = inject(Router);
   private token = signal<string | null>(localStorage.getItem('jwt'));
   user = signal<User | null>(null);
 
@@ -51,6 +52,7 @@ export class Auth {
     } catch (err) {
       console.error('❌ loadProfile() fehlgeschlagen:', err);
       this.logout();
+      await this.router.navigate(['/login']);
     }
   }
 

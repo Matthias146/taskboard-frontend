@@ -1,15 +1,16 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Auth } from '../../../auth/auth';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
   private auth = inject(Auth);
+  private router = inject(Router);
 
   isMenuOpen = signal(false);
 
@@ -48,6 +49,7 @@ export class Header {
 
   async logout(): Promise<void> {
     this.auth.logout();
+    await this.router.navigate(['/login']);
     this.isMenuOpen.set(false);
   }
 }

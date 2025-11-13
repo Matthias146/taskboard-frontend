@@ -1,0 +1,49 @@
+@use '../../styles/variables' as v;
+
+.dashboard {
+  padding: 1.5rem;
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: v.$primary;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  &__card {
+    background: v.$surface;
+    color: v.$text;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.08),
+      0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+
+    h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    .number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: v.$primary;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.07);
+    }
+  }
+}

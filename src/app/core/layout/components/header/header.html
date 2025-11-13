@@ -1,0 +1,54 @@
+<header class="app-header">
+  <div class="app-header__left"></div>
+
+  @if (isLoggedIn()) {
+  <div class="app-header__right">
+    <div class="user-menu" (click)="toggleMenu()">
+      <div class="user-menu__avatar">
+        {{ initials() }}
+      </div>
+
+      <div class="user-menu__info">
+        <div class="user-menu__name">
+          {{ displayName() || 'Unbekannter Benutzer' }}
+        </div>
+        @if (roleLabel()) {
+        <div class="user-menu__role">
+          {{ roleLabel() }}
+        </div>
+        }
+      </div>
+
+      <span class="user-menu__chevron">
+        {{ isMenuOpen() ? '▲' : '▼' }}
+      </span>
+    </div>
+
+    @if (isMenuOpen()) {
+    <div class="user-dropdown">
+      <div class="user-dropdown__header">
+        <div class="user-dropdown__avatar">
+          {{ initials() }}
+        </div>
+        <div>
+          <div class="user-dropdown__name">
+            {{ displayName() || 'Unbekannter Benutzer' }}
+          </div>
+          @if (roleLabel()) {
+          <div class="user-dropdown__role">
+            {{ roleLabel() }}
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="user-dropdown__body">
+        <a routerLink="/settings" class="user-dropdown__item"> ⚙️ Einstellungen </a>
+      </div>
+
+      <button type="button" class="user-dropdown__logout" (click)="logout()">🚪 Abmelden</button>
+    </div>
+    }
+  </div>
+  }
+</header>

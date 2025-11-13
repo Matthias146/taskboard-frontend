@@ -13,20 +13,28 @@
 }
 
 .register-card {
-  background: var(--color-surface);
-  color: var(--color-text);
+  background: v.$surface;
+  color: v.$text;
   border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.05);
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   padding: 2.5rem;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   .title {
     text-align: center;
     margin-bottom: 1.8rem;
-    color: var(--color-primary);
+    color: v.$primary;
     font-weight: 700;
     font-size: 1.6rem;
+    letter-spacing: 0.5px;
   }
 
   .form-field {
@@ -37,6 +45,7 @@
     label {
       margin-bottom: 0.4rem;
       font-weight: 600;
+      font-size: 0.9rem;
       color: var(--color-text-muted);
     }
 
@@ -44,20 +53,20 @@
       padding: 0.7rem 0.9rem;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 0.5rem;
-      background: var(--color-bg);
-      color: var(--color-text);
+      background: v.$bg;
+      color: v.$text;
       font-size: 0.95rem;
       transition: border-color 0.2s, box-shadow 0.2s;
 
       &:focus {
         outline: none;
-        border-color: var(--color-primary);
+        border-color: v.$primary;
         box-shadow: 0 0 0 3px rgba(224, 35, 78, 0.15);
       }
     }
 
     .error {
-      color: var(--color-primary);
+      color: v.$primary;
       font-size: 0.8rem;
       margin-top: 0.4rem;
     }
@@ -66,16 +75,23 @@
   button {
     width: 100%;
     padding: 0.8rem;
-    background: var(--color-primary);
+    background: v.$primary;
     color: #fff;
     border: none;
     border-radius: 0.5rem;
     font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
     cursor: pointer;
-    transition: background 0.25s ease;
+    transition: background 0.25s ease, transform 0.1s ease;
 
     &:hover:not(:disabled) {
       background: var(--color-primary-dark);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
 
     &:disabled {
@@ -87,10 +103,11 @@
   .login-hint {
     text-align: center;
     margin-top: 1.3rem;
+    font-size: 0.9rem;
     color: var(--color-text-muted);
 
     a {
-      color: var(--color-primary);
+      color: v.$primary;
       text-decoration: none;
       font-weight: 500;
 

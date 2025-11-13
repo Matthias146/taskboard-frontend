@@ -19,6 +19,7 @@ export class Register {
   errorMessage = signal<string | null>(null);
 
   form = this.fb.group({
+    name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]],
@@ -27,7 +28,7 @@ export class Register {
   async onSubmit() {
     if (this.form.invalid) return;
 
-    const { email, password, confirmPassword } = this.form.value;
+    const { name, email, password, confirmPassword } = this.form.value;
     if (password !== confirmPassword) {
       this.errorMessage.set('Die Passwörter stimmen nicht überein.');
       return;
@@ -38,7 +39,7 @@ export class Register {
 
     try {
       await firstValueFrom(
-        this.http.post('http://localhost:3000/auth/register', { email, password })
+        this.http.post('http://localhost:3000/auth/register', { name, email, password })
       );
 
       this.router.navigate(['/login']);

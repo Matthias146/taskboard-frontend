@@ -23,9 +23,4 @@ export class Tasks {
   tasks = this.tasksResource.value;
   isLoading = this.tasksResource.isLoading;
   error = this.tasksResource.error;
-
-  logout() {
-    localStorage.removeItem('jwt');
-    this.router.navigate(['/login']);
-  }
 }

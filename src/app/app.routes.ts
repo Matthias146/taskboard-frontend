@@ -4,33 +4,29 @@ import { Register } from './features/auth/register/register';
 import { Tasks } from './features/tasks/tasks/tasks';
 import { AuthGuard } from './core/guards/auth-guard';
 import { GuestGuard } from './core/guards/guest-guard';
+import { Layout } from './core/layout/layout';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
     pathMatch: 'full',
+    redirectTo: 'login',
   },
+
   {
-    path: 'login',
-    component: Login,
-    title: 'Anmelden',
+    path: '',
     canActivate: [GuestGuard],
+    children: [
+      { path: 'login', component: Login, title: 'Anmelden' },
+      { path: 'register', component: Register, title: 'Registrieren' },
+    ],
   },
   {
-    path: 'register',
-    component: Register,
-    title: 'Registrieren',
-    canActivate: [GuestGuard],
-  },
-  {
-    path: 'tasks',
-    component: Tasks,
+    path: '',
+    component: Layout,
     canActivate: [AuthGuard],
-    title: 'Deine Tasks',
+    children: [{ path: 'tasks', component: Tasks, title: 'Deine Tasks' }],
   },
-  {
-    path: '**',
-    redirectTo: '/login',
-  },
+
+  { path: '**', redirectTo: 'login' },
 ];

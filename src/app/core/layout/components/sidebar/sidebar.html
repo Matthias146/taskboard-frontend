@@ -1,0 +1,29 @@
+<nav class="sidebar" [class.sidebar--collapsed]="collapsed()">
+  <div class="sidebar__logo">
+    <span>🧠</span>
+    @if (!collapsed()) {
+    <strong>TaskBoard</strong>
+    }
+  </div>
+
+  <ul class="sidebar__nav">
+    @for (item of navItems; track item.path) {
+    <li
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <span>{{ item.icon }}</span>
+      @if (!collapsed()) {
+      <span>{{ item.label }}</span>
+      }
+    </li>
+    }
+  </ul>
+
+  <div class="sidebar__bottom">
+    <button class="sidebar__toggle" (click)="toggle.emit()">
+      {{ collapsed() ? '➡️' : '⬅️' }}
+    </button>
+  </div>
+</nav>

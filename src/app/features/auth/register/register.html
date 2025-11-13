@@ -4,6 +4,13 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-field">
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name" placeholder="Dein Name" />
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+        <span class="error">Name ist erforderlich</span>
+        }
+      </div>
+      <div class="form-field">
         <label for="email">E-Mail</label>
         <input id="email" type="email" formControlName="email" placeholder="E-Mail eingeben" />
         @if (form.controls.email.touched && form.controls.email.invalid) {

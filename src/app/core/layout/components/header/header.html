@@ -1,7 +1,6 @@
 <header class="app-header">
   <div class="app-header__left"></div>
-
-  @if (isLoggedIn()) {
+  + @if (isLoggedIn()) {
   <div class="app-header__right">
     <div class="user-menu" (click)="toggleMenu()">
       <div class="user-menu__avatar">

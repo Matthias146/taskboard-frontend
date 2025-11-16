@@ -16,7 +16,7 @@ export class TasksApi {
     return this.http.get<Task>(`${this.baseUrl}/${id}`);
   }
 
-  create(data: { title: string; description?: string }) {
+  create(data: { title: string; description?: string; status?: TaskStatus }) {
     return this.http.post<Task>(this.baseUrl, data);
   }
 

@@ -1,35 +1,39 @@
-<div class="tasks-container">
-  <header>
-    <h2>🗂️ Deine Tasks</h2>
+<div class="board">
+  <header class="board__header">
+    <h2>🗂️ Dein Taskboard</h2>
+    <button class="add-btn" (click)="openModal()">➕ Task</button>
   </header>
 
-  <!-- Ladezustand -->
-  @if (isLoading()) {
-  <p>Lade Tasks…</p>
-  }
+  <app-modal [open]="openCreateModal()" (closed)="closeModal()">
+    <app-task-create (saved)="closeModal()" />
+  </app-modal>
 
-  <!-- Fehler -->
-  @else if (error()) {
-  <p class="error">Fehler: {{ error() }}</p>
-  }
+  <div class="board__columns">
+    <app-task-column
+      title="Offen"
+      [status]="TaskStatus.OPEN"
+      [tasks]="tasksOpen()"
+      [connectedTo]="connectedLists()[TaskStatus.OPEN]"
+      (cardDropped)="onColumnDrop($event)"
+      (delete)="removeTask($event)"
+    />
 
-  <!-- Keine Tasks -->
-  @else if (tasks().length === 0) {
-  <p>Keine Tasks vorhanden.</p>
-  }
+    <app-task-column
+      title="In Arbeit"
+      [status]="TaskStatus.IN_PROGRESS"
+      [tasks]="tasksProgress()"
+      [connectedTo]="connectedLists()[TaskStatus.IN_PROGRESS]"
+      (cardDropped)="onColumnDrop($event)"
+      (delete)="removeTask($event)"
+    />
 
-  <!-- Liste der Tasks -->
-  @else {
-  <ul class="task-list">
-    @for (task of tasks(); track task.id) {
-    <li class="task-item">
-      <div class="task-title">{{ task.title }}</div>
-
-      <span class="task-status" [class]="task.status">
-        {{ task.status }}
-      </span>
-    </li>
-    }
-  </ul>
-  }
+    <app-task-column
+      title="Erledigt"
+      [status]="TaskStatus.DONE"
+      [tasks]="tasksDone()"
+      [connectedTo]="connectedLists()[TaskStatus.DONE]"
+      (cardDropped)="onColumnDrop($event)"
+      (delete)="removeTask($event)"
+    />
+  </div>
 </div>

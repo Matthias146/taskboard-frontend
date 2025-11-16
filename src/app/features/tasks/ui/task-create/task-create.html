@@ -1,0 +1,28 @@
+<div class="modal-backdrop" (click)="close()"></div>
+
+<div class="modal">
+  <h3>🆕 Task erstellen</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-field">
+      <label>Titel</label>
+      <input type="text" formControlName="title" placeholder="Task Titel" />
+      @if (form.controls.title.touched && form.controls.title.invalid) {
+      <p class="error">Titel ist erforderlich.</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label>Beschreibung</label>
+      <textarea formControlName="description" placeholder="Beschreibung"></textarea>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="isSubmitting() || form.invalid" class="primary">
+        @if (isSubmitting()) { ⏳ Wird erstellt… } @else { ✨ Erstellen }
+      </button>
+
+      <button type="button" class="secondary" (click)="close()">Abbrechen</button>
+    </div>
+  </form>
+</div>

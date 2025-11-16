@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="header">
+    <span class="title">{{ task().title }}</span>
+
+    <div class="actions">
+      <button class="icon-btn" (click)="onChangeStatus()" title="Status ändern">🔄</button>
+      <button class="icon-btn danger" (click)="onDelete()" title="Löschen">🗑️</button>
+    </div>
+  </div>
+
+  @if (task().description) {
+  <p class="description">{{ task().description }}</p>
+  }
+
+  <div class="footer">
+    <span
+      class="status-chip"
+      [class.open]="task().status === TaskStatus.OPEN"
+      [class.in-progress]="task().status === TaskStatus.IN_PROGRESS"
+      [class.done]="task().status === TaskStatus.DONE"
+    >
+      {{ formatStatus(task().status) }}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+@use '../../../../styles/variables' as v;
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s ease-out;
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 95%;
+  max-width: 420px;
+
+  background: v.$surface;
+  color: v.$text;
+
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.18),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+  transform: translate(-50%, -50%) scale(0.95);
+  animation: popIn 0.18s ease-out forwards;
+  z-index: 1010;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1.4rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: v.$primary;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+    }
+
+    input,
+    textarea {
+      padding: 0.7rem 0.9rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 0.5rem;
+      background: v.$bg;
+      color: v.$text;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: v.$primary;
+        box-shadow: 0 0 0 3px rgba(224, 35, 78, 0.15);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .error {
+      color: v.$primary;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+
+    button {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.95rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.25s ease, transform 0.1s ease;
+
+      &.primary {
+        background: v.$primary;
+        color: white;
+
+        &:hover:not(:disabled) {
+          background: var(--color-primary-dark);
+          transform: translateY(-2px);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      &.secondary {
+        background: v.$bg;
+        color: v.$text;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.04);
+        }
+      }
+    }
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

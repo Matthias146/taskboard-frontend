@@ -1,0 +1,24 @@
+<div class="column">
+  <h3>{{ title() }}</h3>
+
+  <div
+    cdkDropList
+    [id]="status()"
+    [cdkDropListData]="tasks()"
+    [cdkDropListConnectedTo]="connectedTo()"
+    (cdkDropListDropped)="onDrop($event)"
+    class="list"
+  >
+    @if(tasks().length === 0) {
+    <p class="empty">Keine Tasks</p>
+    } @for(task of tasks(); track task.id) {
+    <div class="drag" cdkDrag [cdkDragData]="task">
+      <app-task-card
+        [task]="task"
+        (changeStatus)="cardDropped.emit({ taskId: task.id, newStatus: status() })"
+        (delete)="onDelete($event)"
+      />
+    </div>
+    }
+  </div>
+</div>

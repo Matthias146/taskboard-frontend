@@ -1,49 +1,50 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, effect, inject, signal } from '@angular/core';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 import { Task, TaskStatus } from './tasks.model';
-import { TasksApi } from './tasks.api';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Tasks {
-  private api = inject(TasksApi);
+export class TaskService {
+  private http = inject(HttpClient);
+
+  private readonly tasksResource = httpResource<Task[]>(() => ({
+    url: `${environment.apiUrl}/tasks`,
+    method: 'GET',
+  }));
 
   tasks = signal<Task[]>([]);
-  isLoading = signal(false);
-  error = signal<string | null>(null);
+  isLoading = this.tasksResource.isLoading;
+  error = this.tasksResource.error;
 
-  async loadTasks() {
-    this.isLoading.set(true);
-    this.error.set(null);
+  constructor() {
+    effect(() => {
+      const value = this.tasksResource.value();
+      if (value) {
+        this.tasks.set(value);
+      }
+    });
 
-    try {
-      const data = await firstValueFrom(this.api.getAll());
-      this.tasks.set(data);
-    } catch (err: any) {
-      this.error.set(err.error?.message ?? 'Fehler beim Laden der Tasks');
-    } finally {
-      this.isLoading.set(false);
-    }
+    this.refresh();
   }
 
-  async createTask(title: string, description?: string) {
-    const newTask = await firstValueFrom(this.api.create({ title, description }));
-    this.tasks.update((list) => [...list, newTask]);
+  refresh() {
+    this.tasksResource.reload();
   }
 
-  async updateTask(id: number, data: Partial<Task>) {
-    const updated = await firstValueFrom(this.api.update(id, data));
-    this.tasks.update((tasks) => tasks.map((t) => (t.id === id ? updated : t)));
+  createTask(data: { title: string; description?: string; status?: TaskStatus }) {
+    return this.http.post<Task>(`${environment.apiUrl}/tasks`, {
+      ...data,
+      status: data.status ?? TaskStatus.OPEN,
+    });
   }
 
-  async deleteTask(id: number) {
-    await firstValueFrom(this.api.delete(id));
-    this.tasks.update((list) => list.filter((t) => t.id !== id));
+  updateTask(id: number, data: Partial<Task>) {
+    return this.http.patch<Task>(`http://localhost:3000/tasks/${id}`, data);
   }
 
-  async updateStatus(id: number, status: TaskStatus) {
-    const updated = await firstValueFrom(this.api.updateStatus(id, status));
-    this.tasks.update((list) => list.map((t) => (t.id === id ? updated : t)));
+  deleteTask(id: number) {
+    return this.http.delete(`http://localhost:3000/tasks/${id}`);
   }
 }

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 :root {
   --color-bg: #f9f9f9;
   --color-text: #222;
@@ -5,6 +7,7 @@
   --color-primary-dark: #c51d42;
   --color-primary-light: #f04c70;
   --color-surface: #ffffff;
+  --color-surface-hover: #f3f3f3;
   --color-accent: #0077ff;
 --color-error: #d32f2f;
 }
@@ -22,6 +25,7 @@ $btn-padding: 0.5rem 1rem;
   --color-text: #f1f1f1;
   --color-primary: #ff3366;
   --color-surface: #2a2a2a;
+  --color-surface-hover: #242424;
    --color-primary-dark: #e02e5a;
   --color-primary-light: #ff5c85;
 }
@@ -30,5 +34,6 @@ $bg: var(--color-bg);
 $text: var(--color-text);
 $primary: var(--color-primary);
 $surface: var(--color-surface);
+$surface-hover: var(--color-surface-hover);
 $accent: var(--color-accent);
 $error: var(--color-error);

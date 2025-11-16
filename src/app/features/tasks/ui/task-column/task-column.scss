@@ -1,0 +1,84 @@
+@use '../../../../styles/variables' as v;
+
+.column {
+  background: v.$surface;
+  color: v.$text;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+
+  // Wenn Drag aktiv ist → Column highlightet leicht
+  &.cdk-drop-list-dragging {
+    background: v.$surface-hover;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: v.$primary;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Card Liste */
+  .list {
+     min-height: 120px;
+  min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    overflow-y: auto;
+    padding-right: 0.3rem;
+
+    /* Scrollbar */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+    }
+
+    .drag-wrapper {
+  cursor: grab;
+}
+
+.drag-wrapper:active {
+  cursor: grabbing;
+}
+
+    /* Drag Preview */
+    .cdk-drag-preview {
+      background: v.$surface;
+      border-radius: 0.6rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      padding: 0.8rem;
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+
+    /* Platzhalter beim Drag */
+    .cdk-drag-placeholder {
+      border: 2px dashed v.$primary;
+      border-radius: 0.6rem;
+      height: 3rem;
+      opacity: 0.4;
+    }
+
+    /* Während man ein Element zieht */
+    .cdk-drag-animating {
+      transition: transform 0.2s ease;
+    }
+  }
+}

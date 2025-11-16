@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Auth } from '../../../auth/auth';
 import { Router, RouterLink } from '@angular/router';
+import { ThemeToogle } from '../../../../shared/theme/theme-toogle/theme-toogle';
 
 @Component({
   selector: 'app-header',

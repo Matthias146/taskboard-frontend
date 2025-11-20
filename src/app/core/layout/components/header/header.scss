@@ -1,174 +1,169 @@
-@use '../../../../styles/variables' as v;
-
+@use '../../../../styles/utilities/mixins' as mix;
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 1rem;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  position: relative;
-  z-index: 10;
-
-  &__left {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+  padding: var(--space-3) var(--space-5);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: var(--z-header);
+  position: sticky;
+  top: 0;
 
   &__right {
-    position: relative;
     display: flex;
     align-items: center;
+    gap: var(--space-4);
+    position: relative;
   }
 }
 
+/* ---------------------------------------------------------
+   USER MENU (Avatar, Name, Chevron)
+---------------------------------------------------------- */
 .user-menu {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 999px;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: background 0.15s ease;
-  min-width: 0; // für schmale Displays
+  user-select: none;
 
   &:hover {
-    background: #f3f4f6;
+    background: var(--color-surface-hover);
   }
 
   &__avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    background: v.$primary;
-    color: #fff;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: #fff;
+
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
   }
 
   &__info {
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    line-height: 1.2;
   }
 
   &__name {
-    font-size: 0.9rem;
     font-weight: 600;
-    color: v.$text;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 160px;
+    font-size: var(--font-size-sm);
   }
 
   &__role {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    opacity: 0.7;
   }
 
   &__chevron {
-    font-size: 0.8rem;
-    color: #6b7280;
+    opacity: 0.6;
+    font-size: var(--font-size-sm);
   }
 }
 
+/* ---------------------------------------------------------
+   DROPDOWN PANEL
+---------------------------------------------------------- */
 .user-dropdown {
   position: absolute;
+  top: calc(100% + var(--space-2));
   right: 0;
-  top: calc(100% + 0.4rem);
-  width: 230px;
-  background: #ffffff;
-  border-radius: 0.75rem;
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 0.75rem;
-  animation: dropdown-fade-in 0.12s ease-out;
-  border: 1px solid #e5e7eb;
+  width: 220px;
+
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  padding: var(--space-3);
+
+  animation: fadeIn 0.18s ease-out;
+  z-index: var(--z-header);
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
   &__header {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #f3f4f6;
-    margin-bottom: 0.4rem;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
   }
 
   &__avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    background: #f3f4ff;
-    color: v.$primary;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: #fff;
+
     font-weight: 700;
+    font-size: var(--font-size-sm);
   }
 
   &__name {
-    font-size: 0.95rem;
+    font-size: var(--font-size-sm);
     font-weight: 600;
-    color: v.$text;
   }
 
   &__role {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    opacity: 0.7;
   }
 
   &__body {
-    padding: 0.4rem 0;
+    margin-bottom: var(--space-3);
   }
 
   &__item {
     display: block;
-    width: 100%;
-    padding: 0.45rem 0.4rem;
-    border-radius: 0.45rem;
-    font-size: 0.9rem;
+    padding: var(--space-2) 0;
+
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+
     text-decoration: none;
-    color: v.$text;
-    transition: background 0.15s ease;
+    border-radius: var(--radius-md);
 
     &:hover {
-      background: #f3f4f6;
+      background: var(--color-surface-hover);
     }
   }
 
   &__logout {
     width: 100%;
-    margin-top: 0.3rem;
+    padding: var(--space-2) 0;
+
     border: none;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0.6rem;
-    font-size: 0.9rem;
-    font-weight: 500;
+    border-radius: var(--radius-md);
+
+    background: var(--color-error);
+    color: #fff;
+
+    font-weight: 600;
     cursor: pointer;
-    background: #fee2e2;
-    color: #b91c1c;
-    transition: background 0.15s ease, transform 0.05s ease;
+    transition: background 0.15s;
 
     &:hover {
-      background: #fecaca;
-      transform: translateY(-1px);
+      background: var(--color-error-hover);
     }
-  }
-}
-
-@keyframes dropdown-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }

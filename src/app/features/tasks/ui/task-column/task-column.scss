@@ -1,45 +1,53 @@
-@use '../../../../styles/variables' as v;
+@use '../../../../styles/utilities/mixins' as mix;
+
+/* =====================================
+   COMPONENT: task-column
+   (CUBE CSS — Component Layer)
+===================================== */
 
 .column {
-  background: v.$surface;
-  color: v.$text;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-sm);
   transition: background 0.2s ease, box-shadow 0.2s ease;
 
-  // Wenn Drag aktiv ist → Column highlightet leicht
+  /* Wenn Dragging aktiv ist → Highlight */
   &.cdk-drop-list-dragging {
-    background: v.$surface-hover;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    background: var(--color-surface-hover);
+    box-shadow: var(--shadow-md);
   }
 
-  h3 {
-    font-size: 1.2rem;
+  /* ---------------------------
+     HEADER
+  ---------------------------- */
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--font-size-xl);
     font-weight: 700;
-    margin-bottom: 1rem;
-    color: v.$primary;
+    color: var(--color-primary);
   }
 
-  .empty {
-    text-align: center;
-    padding: 1rem;
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-  }
-
-  /* Card Liste */
-  .list {
-     min-height: 120px;
-  min-width: 100%;
+  /* ---------------------------
+     LIST / EMPTY STATE
+  ---------------------------- */
+  &__list {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: var(--space-3);
+    min-height: 10rem;
+    padding-right: var(--space-2);
     overflow-y: auto;
-    padding-right: 0.3rem;
 
     /* Scrollbar */
     &::-webkit-scrollbar {
@@ -47,38 +55,49 @@
     }
     &::-webkit-scrollbar-thumb {
       background: rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
-    }
-
-    .drag-wrapper {
-  cursor: grab;
-}
-
-.drag-wrapper:active {
-  cursor: grabbing;
-}
-
-    /* Drag Preview */
-    .cdk-drag-preview {
-      background: v.$surface;
-      border-radius: 0.6rem;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
-      padding: 0.8rem;
-      opacity: 0.95;
-      transform: scale(1.02);
-    }
-
-    /* Platzhalter beim Drag */
-    .cdk-drag-placeholder {
-      border: 2px dashed v.$primary;
-      border-radius: 0.6rem;
-      height: 3rem;
-      opacity: 0.4;
-    }
-
-    /* Während man ein Element zieht */
-    .cdk-drag-animating {
-      transition: transform 0.2s ease;
+      border-radius: var(--radius-sm);
     }
   }
+
+  &__empty {
+    text-align: center;
+    padding: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* =====================================
+   Drag & Drop
+===================================== */
+
+/* Drag wrapper */
+.drag-area {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+/* Drag Preview */
+.cdk-drag-preview {
+  @include mix.card-base;
+  padding: var(--space-3);
+  box-shadow: var(--shadow-md);
+  opacity: 0.95;
+  transform: scale(1.02);
+}
+
+/* Drag placeholder (zeigt wo die Karte hin kommt) */
+.cdk-drag-placeholder {
+  border: 2px dashed var(--color-primary);
+  border-radius: var(--radius-lg);
+  height: 3.5rem;
+  opacity: 0.4;
+}
+
+/* Smooth Animation */
+.cdk-drag-animating {
+  transition: transform 0.2s ease;
 }

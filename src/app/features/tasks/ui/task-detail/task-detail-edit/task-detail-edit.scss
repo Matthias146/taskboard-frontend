@@ -1,0 +1,61 @@
+@use '../../../../../styles/utilities/mixins' as mix;
+
+/* ========================================
+   EDIT FORM WRAPPER
+======================================== */
+.edit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-bottom: var(--space-4);
+}
+
+/* ========================================
+   FORM FIELD
+======================================== */
+.edit__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Labels */
+.edit__label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* Inputs & Textareas */
+.edit__input,
+.edit__textarea,
+.edit__select {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(224, 35, 78, 0.15);
+    outline: none;
+  }
+}
+
+/* Textarea additional rules */
+.edit__textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+/* ========================================
+   ACTIONS
+======================================== */
+.edit__actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}

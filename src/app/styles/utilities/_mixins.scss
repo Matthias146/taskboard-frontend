@@ -1,0 +1,52 @@
+/* --------------------------------------------
+   MIXIN: Flex Center (für Buttons, Badges, UI)
+--------------------------------------------- */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --------------------------------------------
+   MIXIN: Card Base (für Karten, modale Boxen)
+--------------------------------------------- */
+@mixin card-base {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --------------------------------------------
+   MIXIN: Button Reset (für btn-icon & btn--icon)
+--------------------------------------------- */
+@mixin btn-reset {
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+
+  font: inherit;
+  color: inherit;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --------------------------------------------
+   OPTIONAL: Visually Hidden (für A11y)
+--------------------------------------------- */
+@mixin visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

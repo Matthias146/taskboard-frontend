@@ -1,0 +1,48 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-right: var(--space-2);
+}
+
+/* Titel */
+.detail__title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+/* Beschreibung */
+.detail__description {
+  background: var(--color-surface-hover);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  line-height: 1.5;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  white-space: pre-wrap;
+}
+
+/* Status */
+.detail__status {
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  span {
+    color: var(--color-text-muted);
+  }
+
+  strong {
+    color: var(--color-primary-dark);
+  }
+}
+
+/* Aktionen */
+.detail__actions {
+  margin-top: var(--space-4);
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,25 +1,25 @@
-<div class="card">
-  <div class="header">
-    <span class="title">{{ task().title }}</span>
+<div class="task-card" cdkDrag (click)="onOpenDetails()">
+  <header class="task-card__header">
+    <h4 class="task-card__title">{{ task().title }}</h4>
 
-    <div class="actions">
-      <button class="icon-btn" (click)="onChangeStatus()" title="Status ändern">🔄</button>
-      <button class="icon-btn danger" (click)="onDelete()" title="Löschen">🗑️</button>
+    <div class="task-card__actions">
+      <button class="btn-icon" title="Status ändern" (click)="onChangeStatus($event)">🔄</button>
+
+      <button class="btn-icon btn-icon--danger" title="Löschen" (click)="onDelete($event)">
+        🗑️
+      </button>
     </div>
-  </div>
+  </header>
 
   @if (task().description) {
-  <p class="description">{{ task().description }}</p>
+  <p class="task-card__description">
+    {{ task().description }}
+  </p>
   }
 
-  <div class="footer">
-    <span
-      class="status-chip"
-      [class.open]="task().status === TaskStatus.OPEN"
-      [class.in-progress]="task().status === TaskStatus.IN_PROGRESS"
-      [class.done]="task().status === TaskStatus.DONE"
-    >
+  <footer class="task-card__footer">
+    <span class="task-status task-status--{{ task().status }}">
       {{ formatStatus(task().status) }}
     </span>
-  </div>
+  </footer>
 </div>

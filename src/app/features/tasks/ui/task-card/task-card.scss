@@ -1,89 +1,108 @@
-@use '../../../../styles/variables' as v;
+@use '../../../../styles/utilities/mixins' as mix;
 
-.card {
-  background: v.$surface;
-  color: v.$text;
-  padding: 1rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  border: 1px solid rgba(0,0,0,0.05);
+/* ===========================
+   COMPONENT: task-card
+   (CUBE CSS — Component Layer)
+=========================== */
+
+.task-card {
+  @include mix.card-base;
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: transform .15s ease, box-shadow .15s ease;
+  gap: var(--space-3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-md);
   }
 
-  .header {
+  /* ---------------------------
+     HEADER
+  ---------------------------- */
+  &__header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+  }
 
-    .title {
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1.3;
-    }
+  &__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+    color: var(--color-text);
+  }
 
-    .actions {
-      display: flex;
-      gap: 0.35rem;
+  /* Actions */
+  &__actions {
+    display: flex;
+    gap: var(--space-2);
 
-      .icon-btn {
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        padding: 0.3rem;
-        border-radius: 0.3rem;
-        transition: background 0.2s;
+    .btn-icon {
+      @include mix.btn-reset;
+      @include mix.flex-center;
 
-        &:hover {
-          background: rgba(0,0,0,0.05);
-        }
+      font-size: 1.1rem;
+      padding: var(--space-2);
+      border-radius: var(--radius-md);
 
-        &.danger:hover {
-          background: rgba(224,35,78,0.15);
-        }
+      &:hover {
+        background: var(--color-surface-hover);
+      }
+
+      &--danger:hover {
+        background: rgba(224, 35, 78, 0.15);
+        color: var(--color-primary);
       }
     }
   }
 
-  .description {
-    font-size: 0.9rem;
+  /* ---------------------------
+     DESCRIPTION
+  ---------------------------- */
+  &__description {
+    font-size: var(--font-size-base);
     color: var(--color-text-muted);
     line-height: 1.4;
+    margin: 0;
   }
 
-  .footer {
-    margin-top: 0.5rem;
+  /* ---------------------------
+     FOOTER + STATUS CHIP
+  ---------------------------- */
+  &__footer {
+    margin-top: var(--space-2);
+  }
+}
 
-    .status-chip {
-      display: inline-block;
-      padding: 0.25rem 0.6rem;
-      border-radius: 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
+/* ===========================
+   ELEMENT: Status Chips
+   (CUBE Utility style)
+=========================== */
 
-      &.open {
-        background: #e0f2fe;
-        color: #0369a1;
-      }
+.task-status {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 
-      &.in-progress {
-        background: #fef9c3;
-        color: #a16207;
-      }
+  &--open {
+    background: var(--color-info-bg);
+    color: var(--color-info);
+  }
 
-      &.done {
-        background: #dcfce7;
-        color: #15803d;
-      }
-    }
+  &--in_progress {
+    background: var(--color-warn-bg);
+    color: var(--color-warn);
+  }
+
+  &--done {
+    background: var(--color-success-bg);
+    color: var(--color-success);
   }
 }

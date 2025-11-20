@@ -1,0 +1,28 @@
+<form class="edit" [formGroup]="form" (ngSubmit)="save()">
+  <div class="edit__field">
+    <label class="edit__label">Titel</label>
+    <input class="edit__input" formControlName="title" />
+  </div>
+
+  <div class="edit__field">
+    <label class="edit__label">Beschreibung</label>
+    <textarea class="edit__textarea" formControlName="description"></textarea>
+  </div>
+
+  <div class="edit__field">
+    <label class="edit__label">Status</label>
+    <select class="edit__select" formControlName="status">
+      <option [ngValue]="TaskStatus.OPEN">Offen</option>
+      <option [ngValue]="TaskStatus.IN_PROGRESS">In Arbeit</option>
+      <option [ngValue]="TaskStatus.DONE">Erledigt</option>
+    </select>
+  </div>
+
+  <div class="edit__actions">
+    <button type="submit" class="btn btn--primary" [disabled]="form.invalid || isSaving()">
+      @if (isSaving()) { 💾 Speichern… } @else { 💾 Speichern }
+    </button>
+
+    <button type="button" class="btn btn--secondary" (click)="cancel.emit()">Abbrechen</button>
+  </div>
+</form>

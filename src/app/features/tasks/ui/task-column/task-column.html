@@ -1,22 +1,25 @@
-<div class="column">
-  <h3>{{ title() }}</h3>
+<div
+  class="column"
+  cdkDropList
+  [id]="status()"
+  [cdkDropListData]="tasks()"
+  [cdkDropListConnectedTo]="connectedTo()"
+  (cdkDropListDropped)="onDrop($event)"
+>
+  <header class="column__header">
+    <h3 class="column__title">{{ title() }}</h3>
+  </header>
 
-  <div
-    cdkDropList
-    [id]="status()"
-    [cdkDropListData]="tasks()"
-    [cdkDropListConnectedTo]="connectedTo()"
-    (cdkDropListDropped)="onDrop($event)"
-    class="list"
-  >
-    @if(tasks().length === 0) {
-    <p class="empty">Keine Tasks</p>
-    } @for(task of tasks(); track task.id) {
-    <div class="drag" cdkDrag [cdkDragData]="task">
+  <div class="column__list">
+    @if (tasks().length === 0) {
+    <p class="column__empty">Keine Tasks</p>
+    } @for (task of tasks(); track task.id) {
+    <div class="drag-area" cdkDrag [cdkDragData]="task" (click)="onCardClick(task)">
       <app-task-card
         [task]="task"
         (changeStatus)="cardDropped.emit({ taskId: task.id, newStatus: status() })"
         (delete)="onDelete($event)"
+        (openDetails)="openDetails.emit($event)"
       />
     </div>
     }

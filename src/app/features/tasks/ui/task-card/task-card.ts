@@ -12,24 +12,34 @@ export class TaskCard {
 
   changeStatus = output<Task>();
   delete = output<number>();
+  openDetails = output<Task>();
 
   TaskStatus = TaskStatus;
 
-  onChangeStatus() {
+  onChangeStatus(event?: MouseEvent) {
+    event?.stopPropagation();
     this.changeStatus.emit(this.task());
   }
 
-  onDelete() {
+  onDelete(event?: MouseEvent) {
+    event?.stopPropagation();
     this.delete.emit(this.task().id);
   }
 
+  onOpenDetails() {
+    this.openDetails.emit(this.task());
+  }
+
   formatStatus(status: TaskStatus): string {
-    return (
-      {
-        [TaskStatus.OPEN]: 'Offen',
-        [TaskStatus.IN_PROGRESS]: 'In Arbeit',
-        [TaskStatus.DONE]: 'Erledigt',
-      }[status] ?? status
-    );
+    switch (status) {
+      case TaskStatus.OPEN:
+        return 'Offen';
+      case TaskStatus.IN_PROGRESS:
+        return 'In Arbeit';
+      case TaskStatus.DONE:
+        return 'Erledigt';
+      default:
+        return status;
+    }
   }
 }

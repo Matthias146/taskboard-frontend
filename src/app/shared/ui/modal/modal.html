@@ -1,9 +1,11 @@
 @if (open()) {
-<div class="overlay" (click)="close()"></div>
+<div class="modal-overlay" (click)="close()"></div>
 
-<div class="modal">
-  <button class="close-btn" (click)="close()">✖</button>
+<div class="modal-window">
+  <button class="modal-window__close" (click)="close()">✖</button>
 
-  <ng-content />
+  <div class="modal-window__content">
+    <ng-content />
+  </div>
 </div>
 }

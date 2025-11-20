@@ -1,0 +1,41 @@
+:root {
+  /* Base */
+  --color-bg: #f8f9fb;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f3f5;
+
+  /* Text */
+  --color-text: #1d1d1f;
+  --color-text-muted: #6b7280;
+
+  /* Brand */
+  --color-primary: #e0234e;
+  --color-primary-hover: #c51d42;
+
+  --color-border: #e5e7eb;
+
+  --status-open-bg: #e0f2fe;
+  --status-open-text: #0369a1;
+
+  --status-progress-bg: #fef9c3;
+  --status-progress-text: #a16207;
+
+  --status-done-bg: #dcfce7;
+  --status-done-text: #15803d;
+
+  --color-error: #d32f2f;
+}
+
+[data-theme='dark'] {
+  --color-bg: #0f0f12;
+  --color-surface: #1a1b1e;
+  --color-surface-hover: #2a2b2f;
+
+  --color-text: #f5f5f5;
+  --color-text-muted: #9ca3af;
+
+  --color-border: #2f3033;
+
+  --color-primary: #ff3366;
+  --color-primary-hover: #e02e5a;
+}

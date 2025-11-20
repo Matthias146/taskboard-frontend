@@ -1,142 +1,117 @@
-@use '../../../../styles/variables' as v;
+@use '../../../../styles/utilities/mixins' as mix;
 
+/* ========================================
+   BACKDROP
+======================================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  animation: fadeIn 0.15s ease-out;
-  z-index: 1000;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: var(--z-overlay);
 }
 
+/* ========================================
+   MODAL CONTAINER
+======================================== */
 .modal {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 95%;
-  max-width: 420px;
+  transform: translate(-50%, -50%);
+  width: min(32rem, 90vw);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-modal);
 
-  background: v.$surface;
-  color: v.$text;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  animation: modalFadeIn 0.25s ease forwards;
 
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.18),
-    0 4px 10px rgba(0, 0, 0, 0.08);
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translate(-50%, -48%); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+  }
+}
 
-  transform: translate(-50%, -50%) scale(0.95);
-  animation: popIn 0.18s ease-out forwards;
-  z-index: 1010;
+/* ========================================
+   HEADER
+======================================== */
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
 
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1.4rem;
-    font-size: 1.4rem;
+  .modal__title {
+    margin: 0;
+    font-size: var(--font-size-xl);
     font-weight: 700;
-    color: v.$primary;
-  }
-
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.2rem;
-
-    label {
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-      font-size: 0.92rem;
-      color: var(--color-text-muted);
-    }
-
-    input,
-    textarea {
-      padding: 0.7rem 0.9rem;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 0.5rem;
-      background: v.$bg;
-      color: v.$text;
-      font-size: 0.95rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-
-      &:focus {
-        outline: none;
-        border-color: v.$primary;
-        box-shadow: 0 0 0 3px rgba(224, 35, 78, 0.15);
-      }
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .error {
-      color: v.$primary;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-    }
-  }
-
-  .actions {
-    display: flex;
-    gap: 0.8rem;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
-
-    button {
-      padding: 0.7rem 1.2rem;
-      font-size: 0.95rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: background 0.25s ease, transform 0.1s ease;
-
-      &.primary {
-        background: v.$primary;
-        color: white;
-
-        &:hover:not(:disabled) {
-          background: var(--color-primary-dark);
-          transform: translateY(-2px);
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-        }
-      }
-
-      &.secondary {
-        background: v.$bg;
-        color: v.$text;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-
-        &:hover {
-          background: rgba(0, 0, 0, 0.04);
-        }
-      }
-    }
+    color: var(--color-primary);
   }
 }
 
-@keyframes popIn {
-  from {
-    transform: translate(-50%, -50%) scale(0.95);
-    opacity: 0;
+/* ========================================
+   FORM
+======================================== */
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Shared form-field */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+
+  label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
   }
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+
+  input,
+  textarea {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(224, 35, 78, 0.15);
+    }
+  }
+
+  textarea {
+    min-height: 5rem;
+    resize: vertical;
+  }
+
+  .error {
+    font-size: var(--font-size-xs);
+    color: var(--color-error);
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+/* ========================================
+   ACTIONS
+======================================== */
+.modal__actions {
+  margin-top: var(--space-2);
+  display: flex;
+  gap: var(--space-3);
+
+  .btn {
+    flex: 1;
   }
 }

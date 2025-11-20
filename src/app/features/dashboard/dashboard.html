@@ -1,29 +1,27 @@
 <div class="dashboard">
-  <h1 class="dashboard__title">Übersicht</h1>
+  <header class="dashboard__header">
+    <h1 class="dashboard__title">Übersicht</h1>
+  </header>
 
-  <div class="dashboard__grid">
-    <!-- Card: Offene Tasks -->
-    <div class="dashboard__card">
-      <h3>Offene Tasks</h3>
-      <p class="number">3</p>
+  <section class="dashboard__grid">
+    <div class="stat-card stat-card--open">
+      <h3 class="stat-card__title">Offene Tasks</h3>
+      <p class="stat-card__number">3</p>
     </div>
 
-    <!-- Card: In Bearbeitung -->
-    <div class="dashboard__card">
-      <h3>In Bearbeitung</h3>
-      <p class="number">5</p>
+    <div class="stat-card stat-card--progress">
+      <h3 class="stat-card__title">In Bearbeitung</h3>
+      <p class="stat-card__number">5</p>
     </div>
 
-    <!-- Card: Erledigt -->
-    <div class="dashboard__card">
-      <h3>Erledigt</h3>
-      <p class="number">12</p>
+    <div class="stat-card stat-card--done">
+      <h3 class="stat-card__title">Erledigt</h3>
+      <p class="stat-card__number">12</p>
     </div>
 
-    <!-- Card: Kontakte -->
-    <div class="dashboard__card">
-      <h3>Gespeicherte Kontakte</h3>
-      <p class="number">21</p>
+    <div class="stat-card stat-card--contacts">
+      <h3 class="stat-card__title">Gespeicherte Kontakte</h3>
+      <p class="stat-card__number">21</p>
     </div>
-  </div>
+  </section>
 </div>

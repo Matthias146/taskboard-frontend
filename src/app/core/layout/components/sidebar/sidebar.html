@@ -1,21 +1,22 @@
 <nav class="sidebar" [class.sidebar--collapsed]="collapsed()">
   <div class="sidebar__logo">
-    <span>🧠</span>
+    <span class="sidebar__logo-icon">🧠</span>
     @if (!collapsed()) {
-    <strong>TaskBoard</strong>
+    <strong class="sidebar__logo-text">TaskBoard</strong>
     }
   </div>
 
   <ul class="sidebar__nav">
     @for (item of navItems; track item.path) {
     <li
+      class="sidebar__nav-item"
       [routerLink]="item.path"
-      routerLinkActive="active"
+      routerLinkActive="is-active"
       [routerLinkActiveOptions]="{ exact: true }"
     >
-      <span>{{ item.icon }}</span>
+      <span class="sidebar__nav-icon">{{ item.icon }}</span>
       @if (!collapsed()) {
-      <span>{{ item.label }}</span>
+      <span class="sidebar__nav-label">{{ item.label }}</span>
       }
     </li>
     }

@@ -10,16 +10,15 @@ import { CdkDropList, CdkDrag, DragDropModule, CdkDragDrop } from '@angular/cdk/
   styleUrl: './task-column.scss',
 })
 export class TaskColumn {
-  dropList = viewChild(CdkDropList);
   title = input.required<string>();
   status = input.required<TaskStatus>();
   tasks = input.required<Task[]>();
   connectedTo = input<string[]>([]);
 
   cardDropped = output<{ taskId: number; newStatus: TaskStatus }>();
+  cardSelected = output<Task>();
   delete = output<number>();
-
-  ngAfterViewInit() {}
+  openDetails = output<Task>();
 
   onDrop(event: CdkDragDrop<Task[]>) {
     const task = event.item.data as Task | undefined;
@@ -28,6 +27,10 @@ export class TaskColumn {
     if (event.previousContainer.id === event.container.id) return;
 
     this.cardDropped.emit({ taskId: task.id, newStatus: this.status() });
+  }
+
+  onCardClick(task: Task) {
+    this.cardSelected.emit(task);
   }
 
   onDelete(id: number) {

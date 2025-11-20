@@ -1,0 +1,16 @@
+<div class="drawer-backdrop" (click)="onClose()"></div>
+
+<aside class="drawer">
+  <header class="drawer__header">
+    <h3 class="drawer__title">📝 Task Details</h3>
+    <button class="btn-icon" (click)="onClose()">✕</button>
+  </header>
+
+  <section class="drawer__content">
+    @if (mode() === 'view') {
+    <app-task-detail-view [task]="task()!" (edit)="startEdit()" />
+    } @else {
+    <app-task-detail-edit [task]="task()!" (saved)="onSaved($event)" (cancel)="cancelEdit()" />
+    }
+  </section>
+</aside>

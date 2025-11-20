@@ -1,20 +1,23 @@
+<app-modal [open]="openCreateModal()" (closed)="closeModal()">
+  <app-task-create (saved)="closeModal()" />
+</app-modal>
 <div class="board">
   <header class="board__header">
-    <h2>🗂️ Dein Taskboard</h2>
-    <button class="add-btn" (click)="openModal()">➕ Task</button>
+    <h2 class="board__title">🗂️ Dein Taskboard</h2>
+    <button class="btn btn--primary" (click)="openModal()">➕ Task</button>
   </header>
 
-  <app-modal [open]="openCreateModal()" (closed)="closeModal()">
-    <app-task-create (saved)="closeModal()" />
-  </app-modal>
+  <!-- Create Task Modal -->
 
-  <div class="board__columns">
+  <!-- Columns -->
+  <section class="board__columns">
     <app-task-column
       title="Offen"
       [status]="TaskStatus.OPEN"
       [tasks]="tasksOpen()"
-      [connectedTo]="connectedLists()[TaskStatus.OPEN]"
+      [connectedTo]="[TaskStatus.IN_PROGRESS, TaskStatus.DONE]"
       (cardDropped)="onColumnDrop($event)"
+      (cardSelected)="openDetails($event)"
       (delete)="removeTask($event)"
     />
 
@@ -22,8 +25,9 @@
       title="In Arbeit"
       [status]="TaskStatus.IN_PROGRESS"
       [tasks]="tasksProgress()"
-      [connectedTo]="connectedLists()[TaskStatus.IN_PROGRESS]"
+      [connectedTo]="[TaskStatus.OPEN, TaskStatus.DONE]"
       (cardDropped)="onColumnDrop($event)"
+      (cardSelected)="openDetails($event)"
       (delete)="removeTask($event)"
     />
 
@@ -31,9 +35,19 @@
       title="Erledigt"
       [status]="TaskStatus.DONE"
       [tasks]="tasksDone()"
-      [connectedTo]="connectedLists()[TaskStatus.DONE]"
+      [connectedTo]="[TaskStatus.OPEN, TaskStatus.IN_PROGRESS]"
       (cardDropped)="onColumnDrop($event)"
+      (cardSelected)="openDetails($event)"
       (delete)="removeTask($event)"
     />
-  </div>
+  </section>
+
+  <!-- Task Detail Drawer -->
+  @if (selectedTask()) {
+  <app-task-detail-drawer
+    [task]="selectedTask()!"
+    (closed)="closeDetails()"
+    (saved)="onTaskSaved($event)"
+  />
+  }
 </div>

@@ -1,0 +1,16 @@
+<div class="detail">
+  <h4 class="detail__title">{{ task().title }}</h4>
+
+  @if (task().description) {
+  <p class="detail__description">{{ task().description }}</p>
+  }
+
+  <p class="detail__status">
+    <span>Status:</span>
+    <strong>{{ formatStatus(task().status) }}</strong>
+  </p>
+
+  <div class="detail__actions">
+    <button class="btn btn--primary" (click)="edit.emit()">✏️ Bearbeiten</button>
+  </div>
+</div>

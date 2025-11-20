@@ -1,41 +1,47 @@
-<div class="login-container">
-  <div class="login-card">
-    <h2 class="title">Anmelden</h2>
+<div class="login">
+  <div class="login__card">
+    <h2 class="login__title">Anmelden</h2>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-field">
-        <label for="email">E-Mail</label>
+        <label for="email" class="form-field__label">E-Mail</label>
         <input
           id="email"
           type="email"
           formControlName="email"
+          class="form-field__input"
           placeholder="z. B. test@example.com"
         />
+
         @if (form.get('email')?.invalid && form.get('email')?.touched) {
-        <small class="error">Bitte gib eine gültige E-Mail ein.</small>
+        <small class="form-field__error">Bitte gib eine gültige E-Mail ein.</small>
         }
       </div>
 
       <div class="form-field">
-        <label for="password">Passwort</label>
-        <input id="password" type="password" formControlName="password" placeholder="••••••••" />
+        <label for="password" class="form-field__label">Passwort</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-field__input"
+          placeholder="••••••••"
+        />
+
         @if (form.get('password')?.invalid && form.get('password')?.touched) {
-        <small class="error">Passwort muss Mindestens 6 Zeichen lang sein.</small>
+        <small class="form-field__error">Passwort muss mindestens 6 Zeichen lang sein.</small>
         }
       </div>
 
-      <button type="submit" [disabled]="form.invalid || loading()">
-        @if (loading()) {
-        <span>⏳ Einloggen...</span>
-        } @else {
-        <span>🔑 Login</span>
-        }
+      <button
+        class="btn btn--primary login__btn"
+        type="submit"
+        [disabled]="form.invalid || loading()"
+      >
+        @if (loading()) { ⏳ Einloggen... } @else { 🔑 Login }
       </button>
     </form>
 
-    <p class="register-hint">
-      Noch kein Konto?
-      <a href="/register">Jetzt registrieren</a>
-    </p>
+    <p class="login__register">Noch kein Konto? <a routerLink="/register">Jetzt registrieren</a></p>
   </div>
 </div>

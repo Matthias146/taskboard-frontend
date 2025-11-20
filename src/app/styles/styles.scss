@@ -1,15 +1,13 @@
+@use "./utilities/index.scss";
+@import "./tokens/index.css";
 
-@forward 'variables';
-@forward 'mixins';
-@forward 'buttons';
 
-* {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #fff;
-  color: #333;
+html, body {
   margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--font-base);
+  font-family: system-ui, sans-serif;
 }

@@ -1,55 +1,62 @@
 .layout {
   display: grid;
-  grid-template-columns: 250px 1fr;
-  height: 100vh;
-  background: #f9fafb;
-  color: #1f2937;
-  transition: grid-template-columns 0.3s ease-in-out;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: grid-template-columns 0.25s ease;
+  position: static !important; /* wichtig */
+  overflow: visible !important;
 
-  &__sidebar {
-    background: #1e293b;
-    color: #f1f5f9;
-    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    width: 250px;
-    overflow: hidden;
+  /* ------------------------- Collapsed Sidebar ------------------------- */
+  &--collapsed {
+    grid-template-columns: var(--sidebar-width-collapsed) 1fr;
   }
 
+  /* ------------------------- Sidebar Area ------------------------- */
+  &__sidebar {
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    z-index: var(--z-sidebar);
+    height: 100%;
+    position: sticky;
+    top: 0;
+  }
+
+  /* ------------------------- Main Area ----------------------------- */
   &__main {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
+    position: static !important;
+    overflow: visible !important;
   }
 
+  /* ------------------------- Header ------------------------------ */
   &__header {
-    flex-shrink: 0;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-3) var(--space-5);
   }
 
+  /* ------------------------- Content ----------------------------- */
   &__content {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-  }
-
-  /* 👇 collapsible Zustand */
-  &.layout--collapsed {
-    grid-template-columns: 70px 1fr;
-
-    .layout__sidebar {
-      width: 70px;
-    }
+    flex: 1;
+    padding: var(--space-6);
+    max-width: 1400px;
+    width: 100%;
+    margin-inline: auto;
   }
 }
 
-/* 👇 Responsive */
+/* -------------------------------------------
+   Responsive Behavior
+-------------------------------------------- */
 @media (max-width: 900px) {
   .layout {
-    grid-template-columns: 70px 1fr;
-
-    .layout__sidebar {
-      width: 70px;
-    }
+    grid-template-columns: var(--sidebar-width-collapsed) 1fr;
   }
 }

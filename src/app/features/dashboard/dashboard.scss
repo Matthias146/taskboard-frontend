@@ -1,12 +1,22 @@
+/* ANIMATIONS ----------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  padding: var(--space-6);
-  color: var(--color-text);
+  gap: var(--space-8);
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Header -------------------------------------------------- */
 .dashboard__header {
   display: flex;
   align-items: center;
@@ -15,70 +25,146 @@
 
 .dashboard__title {
   font-size: var(--font-size-2xl);
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   margin: 0;
+  color: var(--color-text);
 }
 
-/* Grid ---------------------------------------------------- */
+.dashboard__subtitle {
+  margin: var(--space-1) 0 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.btn-icon-only {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+
+  &:hover {
+    background: var(--color-surface-hover);
+    transform: scale(1.05);
+  }
+}
+
 .dashboard__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-5);
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
 }
 
-/* Stat Card Base ------------------------------------------ */
 .stat-card {
-  padding: var(--space-5);
-  border-radius: var(--radius-lg);
+  --accent: var(--color-primary);
+
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
 
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  justify-content: space-between;
+  gap: var(--space-4);
 
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: default;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+    box-shadow:
+      0 12px 20px -8px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: color-mix(in srgb, var(--accent), transparent 70%);
   }
-}
 
-.stat-card__title {
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-  margin: 0;
-}
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
 
-.stat-card__number {
-  margin: 0;
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-}
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
 
-/* Color Variants ------------------------------------------ */
-.stat-card--open {
-  border-left: 4px solid var(--color-primary);
-}
+    background: color-mix(in srgb, var(--accent), transparent 90%);
+    color: var(--accent);
 
-.stat-card--progress {
-  border-left: 4px solid #facc15; /* Gelb */
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
 
-.stat-card--done {
-  border-left: 4px solid #16a34a; /* Grün */
-}
+  &__title {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 
-.stat-card--contacts {
-  border-left: 4px solid var(--color-accent);
+  &__body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  &__number {
+    margin: 0;
+    font-size: 2.5rem;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: -0.05em;
+  }
+
+  &__trend {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+
+    &.positive {
+      color: #16a34a;
+    }
+  }
+
+  &--open {
+    --accent: var(--color-primary);
+  }
+
+  &--progress {
+    --accent: #f59e0b;
+  }
+
+  &--done {
+    --accent: #10b981;
+  }
+
+  &--contacts {
+    --accent: #8b5cf6;
+  }
 }

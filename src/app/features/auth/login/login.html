@@ -2,42 +2,47 @@
   <div class="login__card">
     <h2 class="login__title">Anmelden</h2>
 
-    <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <form class="login__form" (submit)="onSubmit($event)" novalidate>
+      <!-- E-Mail -->
       <div class="form-field">
         <label for="email" class="form-field__label">E-Mail</label>
+
         <input
           id="email"
           type="email"
-          formControlName="email"
+          [field]="loginForm.email"
           class="form-field__input"
           placeholder="z. B. test@example.com"
         />
 
-        @if (form.get('email')?.invalid && form.get('email')?.touched) {
-        <small class="form-field__error">Bitte gib eine gültige E-Mail ein.</small>
+        @if (isInvalid(loginForm.email) && (loginForm.email().touched() || triedSubmit())) {
+        <small class="form-field__error">
+          @if (hasError(loginForm.email, 'required')) { Bitte E-Mail eingeben. } @else { Bitte eine
+          gültige E-Mail eingeben. }
+        </small>
         }
       </div>
 
+      <!-- Passwort -->
       <div class="form-field">
         <label for="password" class="form-field__label">Passwort</label>
         <input
           id="password"
           type="password"
-          formControlName="password"
+          [field]="loginForm.password"
           class="form-field__input"
           placeholder="••••••••"
         />
 
-        @if (form.get('password')?.invalid && form.get('password')?.touched) {
-        <small class="form-field__error">Passwort muss mindestens 6 Zeichen lang sein.</small>
+        @if (isInvalid(loginForm.password) && (loginForm.password().touched() || triedSubmit())) {
+        <small class="form-field__error">
+          @if (hasError(loginForm.password, 'required')) { Bitte Passwort eingeben. } @else {
+          Mindestens 6 Zeichen. }
+        </small>
         }
       </div>
 
-      <button
-        class="btn btn--primary login__btn"
-        type="submit"
-        [disabled]="form.invalid || loading()"
-      >
+      <button class="btn btn--primary login__btn" type="submit" [disabled]="loading()">
         @if (loading()) { ⏳ Einloggen... } @else { 🔑 Login }
       </button>
     </form>

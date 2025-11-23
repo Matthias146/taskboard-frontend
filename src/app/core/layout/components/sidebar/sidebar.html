@@ -1,30 +1,41 @@
 <nav class="sidebar" [class.sidebar--collapsed]="collapsed()">
-  <div class="sidebar__logo">
-    <span class="sidebar__logo-icon">🧠</span>
+  ´
+  <div class="sidebar__header">
+    <div class="sidebar__logo-icon">🧠</div>
+
     @if (!collapsed()) {
-    <strong class="sidebar__logo-text">TaskBoard</strong>
+    <div class="sidebar__logo-text">TaskBoard</div>
     }
   </div>
 
+  ´
   <ul class="sidebar__nav">
     @for (item of navItems; track item.path) {
-    <li
-      class="sidebar__nav-item"
-      [routerLink]="item.path"
-      routerLinkActive="is-active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <span class="sidebar__nav-icon">{{ item.icon }}</span>
-      @if (!collapsed()) {
-      <span class="sidebar__nav-label">{{ item.label }}</span>
-      }
+    <li>
+      <a
+        class="sidebar__nav-item"
+        [routerLink]="item.path"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [title]="collapsed() ? item.label : ''"
+      >
+        <span class="sidebar__nav-icon">{{ item.icon }}</span>
+
+        <span class="sidebar__nav-label">
+          {{ item.label }}
+        </span>
+      </a>
     </li>
     }
   </ul>
 
-  <div class="sidebar__bottom">
-    <button class="sidebar__toggle" (click)="toggle.emit()">
-      {{ collapsed() ? '➡️' : '⬅️' }}
+  <div class="sidebar__footer">
+    <button
+      class="sidebar__toggle"
+      (click)="toggle.emit()"
+      [title]="collapsed() ? 'Ausklappen' : 'Einklappen'"
+    >
+      <div class="sidebar__toggle-icon"></div>
     </button>
   </div>
 </nav>

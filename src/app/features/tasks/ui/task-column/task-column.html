@@ -1,5 +1,5 @@
 <div
-  class="column"
+  class="column column--{{ status() | lowercase }}"
   cdkDropList
   [id]="status()"
   [cdkDropListData]="tasks()"
@@ -7,20 +7,27 @@
   (cdkDropListDropped)="onDrop($event)"
 >
   <header class="column__header">
-    <h3 class="column__title">{{ title() }}</h3>
+    <div class="column__header-content">
+      <h3 class="column__title">{{ title() }}</h3>
+      <span class="column__count">{{ tasks().length }}</span>
+    </div>
   </header>
 
   <div class="column__list">
     @if (tasks().length === 0) {
-    <p class="column__empty">Keine Tasks</p>
+    <div class="column__empty">
+      <span class="column__empty-icon">📭</span>
+      <p>Keine Tasks</p>
+    </div>
     } @for (task of tasks(); track task.id) {
-    <div class="drag-area" cdkDrag [cdkDragData]="task" (click)="onCardClick(task)">
+    <div class="task-wrapper" cdkDrag [cdkDragData]="task">
       <app-task-card
         [task]="task"
-        (changeStatus)="cardDropped.emit({ taskId: task.id, newStatus: status() })"
         (delete)="onDelete($event)"
         (openDetails)="openDetails.emit($event)"
       />
+
+      <div *cdkDragPlaceholder class="task-placeholder"></div>
     </div>
     }
   </div>

@@ -2,79 +2,83 @@
   <div class="register__card">
     <h2 class="register__title">Konto erstellen</h2>
 
-    <form class="register__form" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!-- Name -->
+    <form class="register__form" (submit)="onSubmit($event)" novalidate>
       <div class="form-field">
         <label class="form-field__label" for="name">Name</label>
         <input
           id="name"
           class="form-field__input"
           type="text"
-          formControlName="name"
+          [field]="registerForm.name"
           placeholder="Dein Name"
         />
-        @if (form.controls.name.touched && form.controls.name.invalid) {
+
+        @if (isInvalid(registerForm.name) && (registerForm.name().touched() || triedSubmit())) {
         <small class="form-field__error">Name ist erforderlich</small>
         }
       </div>
 
-      <!-- Email -->
       <div class="form-field">
         <label class="form-field__label" for="email">E-Mail</label>
         <input
           id="email"
           class="form-field__input"
           type="email"
-          formControlName="email"
+          [field]="registerForm.email"
           placeholder="z. B. test@example.com"
         />
-        @if (form.controls.email.touched && form.controls.email.invalid) {
-        <small class="form-field__error">Bitte gültige E-Mail eingeben</small>
+
+        @if (isInvalid(registerForm.email) && (registerForm.email().touched() || triedSubmit())) {
+        <small class="form-field__error">
+          @if (hasError(registerForm.email, 'required')) { E-Mail ist erforderlich } @else { Bitte
+          gültige E-Mail eingeben }
+        </small>
         }
       </div>
 
-      <!-- Password -->
       <div class="form-field">
         <label class="form-field__label" for="password">Passwort</label>
         <input
           id="password"
           class="form-field__input"
           type="password"
-          formControlName="password"
-          placeholder="•••••••"
+          [field]="registerForm.password"
+          placeholder="••••••••"
         />
-        @if (form.controls.password.touched && form.controls.password.invalid) {
-        <small class="form-field__error">Mindestens 6 Zeichen</small>
+
+        @if (isInvalid(registerForm.password) && (registerForm.password().touched() ||
+        triedSubmit())) {
+        <small class="form-field__error">
+          @if (hasError(registerForm.password, 'required')) { Passwort ist erforderlich } @else {
+          Mindestens 6 Zeichen }
+        </small>
         }
       </div>
 
-      <!-- Confirm Password -->
       <div class="form-field">
         <label class="form-field__label" for="confirmPassword">Passwort bestätigen</label>
         <input
           id="confirmPassword"
           class="form-field__input"
           type="password"
-          formControlName="confirmPassword"
+          [field]="registerForm.confirmPassword"
           placeholder="Erneut eingeben"
         />
+
+        @if (isInvalid(registerForm.confirmPassword) && (registerForm.confirmPassword().touched() ||
+        triedSubmit())) {
+        <small class="form-field__error">Bitte Passwort bestätigen</small>
+        }
       </div>
 
-      <!-- API Error -->
       @if (errorMessage()) {
       <div class="form-error-banner">{{ errorMessage() }}</div>
       }
 
-      <!-- Submit -->
-      <button
-        class="btn btn--primary register__btn"
-        type="submit"
-        [disabled]="isSubmitting() || form.invalid"
-      >
+      <button class="btn btn--primary register__btn" type="submit" [disabled]="isSubmitting()">
         @if (isSubmitting()) { ⏳ Registriere… } @else { ✨ Registrieren }
       </button>
 
-      <!-- Login link -->
       <p class="register__login-hint">
         Bereits ein Konto?
         <a routerLink="/login">Hier einloggen</a>

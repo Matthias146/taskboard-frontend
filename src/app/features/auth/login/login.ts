@@ -1,45 +1,71 @@
 import { Component, inject, signal } from '@angular/core';
 import { Auth } from '../../../core/auth/auth';
 import { Router, RouterLink } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { form, Field, required, email, minLength } from '@angular/forms/signals';
+
+interface LoginData {
+  email: string;
+  password: string;
+}
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  standalone: true,
+  imports: [Field, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
-  private fb = inject(FormBuilder);
   private auth = inject(Auth);
   private router = inject(Router);
 
   loading = signal(false);
   error = signal<string | null>(null);
 
-  form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+  triedSubmit = signal(false);
+
+  model = signal<LoginData>({
+    email: '',
+    password: '',
   });
 
-  get emailCtrl() {
-    return this.form.controls.email;
+  loginForm = form(this.model, (f) => {
+    required(f.email);
+    email(f.email);
+
+    required(f.password);
+    minLength(f.password, 6);
+  });
+
+  hasError(fieldSignal: any, kind: string): boolean {
+    const errors = fieldSignal().errors();
+    return Array.isArray(errors) && errors.some((e: any) => e.kind === kind);
   }
 
-  get passwordCtrl() {
-    return this.form.controls.password;
+  isInvalid(fieldSignal: any): boolean {
+    const errors = fieldSignal().errors();
+    return Array.isArray(errors) && errors.length > 0;
   }
 
-  async onSubmit(): Promise<void> {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+  async onSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    this.triedSubmit.set(true);
+
+    const emailErrors = this.loginForm.email().errors();
+    const passwordErrors = this.loginForm.password().errors();
+
+    const isEmailInvalid = Array.isArray(emailErrors) && emailErrors.length > 0;
+    const isPasswordInvalid = Array.isArray(passwordErrors) && passwordErrors.length > 0;
+
+    if (isEmailInvalid || isPasswordInvalid) {
+      console.warn('Formular ungültig');
       return;
     }
 
     this.loading.set(true);
     this.error.set(null);
 
-    const { email, password } = this.form.getRawValue();
+    const { email, password } = this.model();
 
     try {
       await this.auth.login(email, password);

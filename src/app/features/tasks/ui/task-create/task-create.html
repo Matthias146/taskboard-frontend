@@ -2,34 +2,65 @@
 
 <div class="modal">
   <header class="modal__header">
-    <h3 class="modal__title">🆕 Task erstellen</h3>
-    <button class="btn-icon" type="button" (click)="close()">✕</button>
+    <div class="modal__header-content">
+      <h3 class="modal__title">Task erstellen</h3>
+      <p class="modal__subtitle">Füge deinem Board eine neue Aufgabe hinzu.</p>
+    </div>
+
+    <button class="btn-close" type="button" (click)="close()" title="Schließen">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
   </header>
 
-  <form class="modal__form" [formGroup]="form" (ngSubmit)="submit()">
+  <form class="modal__form" (submit)="submit($event)">
     <div class="form-field">
-      <label for="title">Titel</label>
-      <input id="title" type="text" formControlName="title" placeholder="Task Titel" />
-      @if (form.controls.title.touched && form.controls.title.invalid) {
-      <p class="error">Titel ist erforderlich.</p>
+      <label for="title" class="form-field__label">Titel</label>
+      <input
+        id="title"
+        type="text"
+        [field]="createForm.title"
+        class="form-field__input"
+        placeholder="Was muss erledigt werden?"
+        autofocus
+      />
+
+      @if (isInvalid(createForm.title) && (createForm.title().touched() || triedSubmit())) {
+      <small class="form-field__error">Titel ist erforderlich.</small>
       }
     </div>
 
     <div class="form-field">
-      <label for="description">Beschreibung</label>
+      <label for="description" class="form-field__label"
+        >Beschreibung <span class="optional">(Optional)</span></label
+      >
       <textarea
         id="description"
-        formControlName="description"
-        placeholder="Beschreibung"
+        [field]="createForm.description"
+        class="form-field__input"
+        placeholder="Füge Details oder Notizen hinzu..."
+        rows="4"
       ></textarea>
     </div>
 
     <div class="modal__actions">
-      <button type="submit" class="btn btn--primary" [disabled]="isSubmitting() || form.invalid">
-        @if (isSubmitting()) { ⏳ Wird erstellt… } @else { ✨ Erstellen }
-      </button>
-
       <button type="button" class="btn btn--secondary" (click)="close()">Abbrechen</button>
+
+      <button type="submit" class="btn btn--primary" [disabled]="isSubmitting()">
+        @if (isSubmitting()) { ⏳ Wird gespeichert… } @else { ✨ Erstellen }
+      </button>
     </div>
   </form>
 </div>

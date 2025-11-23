@@ -1,108 +1,141 @@
-@use '../../../../styles/utilities/mixins' as mix;
-
-/* ===========================
-   COMPONENT: task-card
-   (CUBE CSS — Component Layer)
-=========================== */
-
 .task-card {
-  @include mix.card-base;
-  padding: var(--space-3);
+  --card-accent: var(--color-text-muted);
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  cursor: grab;
+  position: relative;
+  overflow: hidden;
+
+  border-left: 3px solid var(--card-accent);
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 10;
   }
 
-  /* ---------------------------
-     HEADER
-  ---------------------------- */
+  &:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &--open {
+    --card-accent: var(--color-primary);
+  }
+
+  &--in_progress {
+    --card-accent: #f59e0b;
+  }
+
+  &--done {
+    --card-accent: #10b981;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: var(--space-2);
   }
 
   &__title {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     font-weight: 600;
     margin: 0;
-    line-height: 1.3;
+    line-height: 1.4;
     color: var(--color-text);
+    word-break: break-word;
   }
 
-  /* Actions */
   &__actions {
     display: flex;
-    gap: var(--space-2);
+    gap: var(--space-1);
+    margin-top: -4px;
+    margin-right: -4px;
 
-    .btn-icon {
-      @include mix.btn-reset;
-      @include mix.flex-center;
+    opacity: 1;
 
-      font-size: 1.1rem;
-      padding: var(--space-2);
-      border-radius: var(--radius-md);
-
-      &:hover {
-        background: var(--color-surface-hover);
-      }
-
-      &--danger:hover {
-        background: rgba(224, 35, 78, 0.15);
-        color: var(--color-primary);
-      }
+    @media (min-width: 1024px) {
+      opacity: 0;
+      transition: opacity 0.2s ease;
     }
   }
 
-  /* ---------------------------
-     DESCRIPTION
-  ---------------------------- */
-  &__description {
-    font-size: var(--font-size-base);
-    color: var(--color-text-muted);
-    line-height: 1.4;
-    margin: 0;
+  &:hover &__actions,
+  &:focus-within &__actions {
+    opacity: 1;
   }
 
-  /* ---------------------------
-     FOOTER + STATUS CHIP
-  ---------------------------- */
+  .action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-primary);
+    }
+
+    &--danger:hover {
+      background: color-mix(in srgb, var(--color-error), transparent 90%);
+      color: var(--color-error);
+    }
+  }
+
+  &__description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   &__footer {
-    margin-top: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-1);
   }
 }
 
-/* ===========================
-   ELEMENT: Status Chips
-   (CUBE Utility style)
-=========================== */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
 
-.task-status {
-  display: inline-block;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.05em;
 
-  &--open {
-    background: var(--color-info-bg);
-    color: var(--color-info);
-  }
-
-  &--in_progress {
-    background: var(--color-warn-bg);
-    color: var(--color-warn);
-  }
-
-  &--done {
-    background: var(--color-success-bg);
-    color: var(--color-success);
-  }
+  color: var(--card-accent);
+  background: color-mix(in srgb, var(--card-accent), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--card-accent), transparent 85%);
 }

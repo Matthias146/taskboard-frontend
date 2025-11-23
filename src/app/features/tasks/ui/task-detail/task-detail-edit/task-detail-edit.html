@@ -1,28 +1,53 @@
-<form class="edit" [formGroup]="form" (ngSubmit)="save()">
+<form class="edit" (submit)="save($event)">
   <div class="edit__field">
-    <label class="edit__label">Titel</label>
-    <input class="edit__input" formControlName="title" />
+    <label for="title" class="edit__label">Titel</label>
+    <input
+      id="title"
+      type="text"
+      [field]="editForm.title"
+      class="edit__input"
+      placeholder="Titel der Aufgabe"
+    />
+
+    @if (isInvalid(editForm.title) && (editForm.title().touched() || triedSubmit())) {
+    <small class="edit__error">Titel ist erforderlich.</small>
+    }
   </div>
 
   <div class="edit__field">
-    <label class="edit__label">Beschreibung</label>
-    <textarea class="edit__textarea" formControlName="description"></textarea>
+    <label for="description" class="edit__label">Beschreibung</label>
+    <textarea
+      id="description"
+      [field]="editForm.description"
+      class="edit__textarea"
+      placeholder="Beschreibung hinzufügen..."
+    ></textarea>
   </div>
 
   <div class="edit__field">
-    <label class="edit__label">Status</label>
-    <select class="edit__select" formControlName="status">
-      <option [ngValue]="TaskStatus.OPEN">Offen</option>
-      <option [ngValue]="TaskStatus.IN_PROGRESS">In Arbeit</option>
-      <option [ngValue]="TaskStatus.DONE">Erledigt</option>
-    </select>
+    <label for="status" class="edit__label">Status</label>
+    <div class="select-wrapper">
+      <select id="status" [field]="editForm.status" class="edit__select">
+        <option [value]="TaskStatus.OPEN">Offen</option>
+        <option [value]="TaskStatus.IN_PROGRESS">In Arbeit</option>
+        <option [value]="TaskStatus.DONE">Erledigt</option>
+      </select>
+      <div class="select-icon">▼</div>
+    </div>
   </div>
 
   <div class="edit__actions">
-    <button type="submit" class="btn btn--primary" [disabled]="form.invalid || isSaving()">
+    <button type="submit" class="btn btn--primary" [disabled]="isSaving()">
       @if (isSaving()) { 💾 Speichern… } @else { 💾 Speichern }
     </button>
 
-    <button type="button" class="btn btn--secondary" (click)="cancel.emit()">Abbrechen</button>
+    <button
+      type="button"
+      class="btn btn--secondary"
+      (click)="cancel.emit()"
+      [disabled]="isSaving()"
+    >
+      Abbrechen
+    </button>
   </div>
 </form>

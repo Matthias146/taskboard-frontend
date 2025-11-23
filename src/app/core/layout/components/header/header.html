@@ -3,53 +3,63 @@
 
   @if (isLoggedIn()) {
   <div class="app-header__right">
-    <div class="user-menu" (click)="toggleMenu()">
+    <div
+      class="user-menu"
+      [class.user-menu--open]="isMenuOpen()"
+      (click)="toggleMenu()"
+      role="button"
+      tabindex="0"
+    >
       <div class="user-menu__avatar">
         {{ initials() }}
       </div>
 
       <div class="user-menu__info">
         <div class="user-menu__name">
-          {{ displayName() || 'Unbekannter Benutzer' }}
+          {{ displayName() || 'Benutzer' }}
         </div>
 
         @if (roleLabel()) {
-        <div class="user-menu__role">
-          {{ roleLabel() }}
-        </div>
+        <div class="user-menu__role">{{ roleLabel() }}</div>
         }
       </div>
 
-      <span class="user-menu__chevron">
-        {{ isMenuOpen() ? '▲' : '▼' }}
-      </span>
+      <div class="user-menu__chevron"></div>
     </div>
 
     @if (isMenuOpen()) {
+    <div class="dropdown-backdrop" (click)="closeMenu()"></div>
+
     <div class="user-dropdown">
       <div class="user-dropdown__header">
         <div class="user-dropdown__avatar">
           {{ initials() }}
         </div>
-
-        <div>
-          <div class="user-dropdown__name">
-            {{ displayName() || 'Unbekannter Benutzer' }}
-          </div>
-
+        <div class="user-dropdown__meta">
+          <div class="user-dropdown__name">{{ displayName() }}</div>
           @if (roleLabel()) {
-          <div class="user-dropdown__role">
-            {{ roleLabel() }}
-          </div>
+          <div class="user-dropdown__role">{{ roleLabel() }}</div>
           }
         </div>
       </div>
 
+      <hr class="user-dropdown__divider" />
+
       <div class="user-dropdown__body">
-        <a routerLink="/settings" class="user-dropdown__item">⚙️ Einstellungen</a>
+        <a routerLink="/settings" class="user-dropdown__item" (click)="closeMenu()">
+          ⚙️ Einstellungen
+        </a>
       </div>
 
-      <button type="button" class="user-dropdown__logout" (click)="logout()">🚪 Abmelden</button>
+      <hr class="user-dropdown__divider" />
+
+      <button
+        type="button"
+        class="user-dropdown__item user-dropdown__item--danger"
+        (click)="logout()"
+      >
+        🚪 Abmelden
+      </button>
     </div>
     }
   </div>

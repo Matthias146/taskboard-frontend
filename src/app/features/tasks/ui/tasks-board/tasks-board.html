@@ -1,48 +1,57 @@
-<app-modal [open]="openCreateModal()" (closed)="closeModal()">
-  <app-task-create (saved)="closeModal()" />
-</app-modal>
+@if (openCreateModal()) {
+<app-task-create (saved)="closeModal()" />
+}
+
 <div class="board">
   <header class="board__header">
-    <h2 class="board__title">🗂️ Dein Taskboard</h2>
-    <button class="btn btn--primary" (click)="openModal()">➕ Task</button>
+    <div>
+      <h2 class="board__title">Taskboard</h2>
+      <p class="board__subtitle">Verwalte deine Aufgaben per Drag & Drop.</p>
+    </div>
+
+    <button class="btn btn--primary" (click)="openModal()">
+      <span class="icon">＋</span> Neuer Task
+    </button>
   </header>
 
-  <!-- Create Task Modal -->
-
-  <!-- Columns -->
   <section class="board__columns">
     <app-task-column
+      class="board__column"
+      style="--delay: 0ms"
       title="Offen"
       [status]="TaskStatus.OPEN"
       [tasks]="tasksOpen()"
       [connectedTo]="[TaskStatus.IN_PROGRESS, TaskStatus.DONE]"
       (cardDropped)="onColumnDrop($event)"
-      (cardSelected)="openDetails($event)"
+      (openDetails)="openDetails($event)"
       (delete)="removeTask($event)"
     />
 
     <app-task-column
+      class="board__column"
+      style="--delay: 100ms"
       title="In Arbeit"
       [status]="TaskStatus.IN_PROGRESS"
       [tasks]="tasksProgress()"
       [connectedTo]="[TaskStatus.OPEN, TaskStatus.DONE]"
       (cardDropped)="onColumnDrop($event)"
-      (cardSelected)="openDetails($event)"
+      (openDetails)="openDetails($event)"
       (delete)="removeTask($event)"
     />
 
     <app-task-column
+      class="board__column"
+      style="--delay: 200ms"
       title="Erledigt"
       [status]="TaskStatus.DONE"
       [tasks]="tasksDone()"
       [connectedTo]="[TaskStatus.OPEN, TaskStatus.IN_PROGRESS]"
       (cardDropped)="onColumnDrop($event)"
-      (cardSelected)="openDetails($event)"
+      (openDetails)="openDetails($event)"
       (delete)="removeTask($event)"
     />
   </section>
 
-  <!-- Task Detail Drawer -->
   @if (selectedTask()) {
   <app-task-detail-drawer
     [task]="selectedTask()!"

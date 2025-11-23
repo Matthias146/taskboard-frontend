@@ -1,14 +1,10 @@
-@use '../../../../styles/utilities/mixins' as mix;
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-3) var(--space-5);
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  z-index: var(--z-header);
-  position: sticky;
-  top: 0;
+  width: 100%;
+  height: 100%;
+
 
   &__right {
     display: flex;
@@ -18,152 +14,194 @@
   }
 }
 
-/* ---------------------------------------------------------
-   USER MENU (Avatar, Name, Chevron)
----------------------------------------------------------- */
 .user-menu {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1);
+
+  border-radius: 9999px;
+  border: 1px solid transparent;
+
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.2s ease;
   user-select: none;
 
-  &:hover {
+  &:hover, &--open {
     background: var(--color-surface-hover);
+    border-color: var(--color-border);
   }
 
   &__avatar {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
 
-    width: 36px;
-    height: 36px;
-
-    border-radius: var(--radius-full);
     background: var(--color-primary);
     color: #fff;
-
-    font-weight: 700;
-    font-size: var(--font-size-sm);
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
   &__info {
     display: flex;
     flex-direction: column;
     line-height: 1.2;
+
+    @media (max-width: 640px) {
+      display: none;
+    }
   }
 
   &__name {
     font-weight: 600;
     font-size: var(--font-size-sm);
+    color: var(--color-text);
   }
 
   &__role {
-    font-size: var(--font-size-xs);
-    opacity: 0.7;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    font-weight: 700;
   }
 
   &__chevron {
-    opacity: 0.6;
-    font-size: var(--font-size-sm);
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--color-text-muted);
+    border-bottom: 2px solid var(--color-text-muted);
+    transform: rotate(45deg);
+    margin-left: var(--space-1);
+    margin-bottom: 2px;
+    transition: transform 0.2s ease;
+  }
+
+  &--open &__chevron {
+    transform: rotate(225deg);
+    margin-bottom: -2px;
   }
 }
 
-/* ---------------------------------------------------------
-   DROPDOWN PANEL
----------------------------------------------------------- */
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 90;
+  cursor: default;
+}
+
 .user-dropdown {
   position: absolute;
   top: calc(100% + var(--space-2));
   right: 0;
-  width: 220px;
+  width: 240px;
 
   background: var(--color-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
   border: 1px solid var(--color-border);
-  padding: var(--space-3);
 
-  animation: fadeIn 0.18s ease-out;
-  z-index: var(--z-header);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to   { opacity: 1; transform: translateY(0); }
+  padding: var(--space-2);
+  z-index: 100;
+
+  transform-origin: top right;
+  animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.95) translateY(-5px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
   }
 
   &__header {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    margin-bottom: var(--space-3);
+    padding: var(--space-2) var(--space-2) var(--space-1);
   }
 
   &__avatar {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 42px;
-    height: 42px;
-
-    border-radius: var(--radius-full);
-    background: var(--color-primary);
-    color: #fff;
-
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-primary), transparent 90%);
+    color: var(--color-primary);
     font-weight: 700;
     font-size: var(--font-size-sm);
   }
 
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
   &__name {
     font-size: var(--font-size-sm);
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__role {
     font-size: var(--font-size-xs);
-    opacity: 0.7;
+    color: var(--color-text-muted);
   }
 
-  &__body {
-    margin-bottom: var(--space-3);
+  &__divider {
+    margin: var(--space-2) 0;
+    border: none;
+    border-top: 1px solid var(--color-border);
+    opacity: 0.5;
   }
 
   &__item {
-    display: block;
-    padding: var(--space-2) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
 
     font-size: var(--font-size-sm);
     color: var(--color-text);
-
+    font-weight: 500;
     text-decoration: none;
+    text-align: left;
+
+    background: transparent;
+    border: none;
     border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.15s ease;
 
     &:hover {
       background: var(--color-surface-hover);
     }
-  }
 
-  &__logout {
-    width: 100%;
-    padding: var(--space-2) 0;
+    &--danger {
+      color: var(--color-error);
 
-    border: none;
-    border-radius: var(--radius-md);
-
-    background: var(--color-error);
-    color: #fff;
-
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s;
-
-    &:hover {
-      background: var(--color-error-hover);
+      &:hover {
+        background: color-mix(in srgb, var(--color-error), transparent 90%);
+      }
     }
   }
 }

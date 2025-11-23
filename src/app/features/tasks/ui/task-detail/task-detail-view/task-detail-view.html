@@ -1,16 +1,44 @@
 <div class="detail">
-  <h4 class="detail__title">{{ task().title }}</h4>
+  <!-- Header Area -->
+  <header class="detail__header">
+    <span class="detail__label">Titel</span>
+    <h2 class="detail__title">{{ task().title }}</h2>
+  </header>
 
-  @if (task().description) {
-  <p class="detail__description">{{ task().description }}</p>
-  }
+  <div class="detail__section">
+    <span class="detail__label">Status</span>
+    <div class="status-badge status-badge--{{ task().status | lowercase }}">
+      {{ formatStatus(task().status) }}
+    </div>
+  </div>
 
-  <p class="detail__status">
-    <span>Status:</span>
-    <strong>{{ formatStatus(task().status) }}</strong>
-  </p>
+  <div class="detail__section">
+    <span class="detail__label">Beschreibung</span>
+    @if (task().description) {
+    <div class="detail__description">
+      {{ task().description }}
+    </div>
+    } @else {
+    <p class="detail__empty">Keine Beschreibung vorhanden.</p>
+    }
+  </div>
 
   <div class="detail__actions">
-    <button class="btn btn--primary" (click)="edit.emit()">✏️ Bearbeiten</button>
+    <button class="btn btn--primary" (click)="edit.emit()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+      </svg>
+      Bearbeiten
+    </button>
   </div>
 </div>

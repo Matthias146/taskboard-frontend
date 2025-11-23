@@ -1,11 +1,13 @@
-import { Component, input, output, viewChild } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Wichtig für lowercase pipe
 import { Task, TaskStatus } from '../../data/tasks.model';
 import { TaskCard } from '../task-card/task-card';
 import { CdkDropList, CdkDrag, DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-task-column',
-  imports: [TaskCard, DragDropModule, CdkDropList, CdkDrag],
+  standalone: true,
+  imports: [CommonModule, TaskCard, DragDropModule, CdkDropList, CdkDrag],
   templateUrl: './task-column.html',
   styleUrl: './task-column.scss',
 })
@@ -16,7 +18,6 @@ export class TaskColumn {
   connectedTo = input<string[]>([]);
 
   cardDropped = output<{ taskId: number; newStatus: TaskStatus }>();
-  cardSelected = output<Task>();
   delete = output<number>();
   openDetails = output<Task>();
 
@@ -24,13 +25,13 @@ export class TaskColumn {
     const task = event.item.data as Task | undefined;
     if (!task) return;
 
-    if (event.previousContainer.id === event.container.id) return;
+    if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
+      return;
+    }
 
-    this.cardDropped.emit({ taskId: task.id, newStatus: this.status() });
-  }
-
-  onCardClick(task: Task) {
-    this.cardSelected.emit(task);
+    if (event.previousContainer.id !== event.container.id) {
+      this.cardDropped.emit({ taskId: task.id, newStatus: this.status() });
+    }
   }
 
   onDelete(id: number) {

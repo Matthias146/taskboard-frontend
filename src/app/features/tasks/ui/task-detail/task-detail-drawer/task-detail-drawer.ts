@@ -5,6 +5,7 @@ import { TaskDetailEdit } from '../task-detail-edit/task-detail-edit';
 
 @Component({
   selector: 'app-task-detail-drawer',
+  standalone: true,
   imports: [TaskDetailView, TaskDetailEdit],
   templateUrl: './task-detail-drawer.html',
   styleUrl: './task-detail-drawer.scss',

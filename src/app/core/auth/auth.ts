@@ -16,7 +16,6 @@ export class Auth {
   isLoggedIn = computed(() => !!this.token());
 
   constructor() {
-    // 🔄 Synchronisiere User automatisch bei Token-Änderung
     effect(() => {
       const token = this.token();
       if (token) void this.loadProfile();
@@ -52,7 +51,7 @@ export class Auth {
     } catch (err) {
       console.error('❌ loadProfile() fehlgeschlagen:', err);
       this.logout();
-      await this.router.navigate(['/login']);
+      await this.router.navigateByUrl('/login');
     }
   }
 

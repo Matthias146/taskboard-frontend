@@ -22,6 +22,9 @@
     <p class="detail__empty">Keine Beschreibung vorhanden.</p>
     }
   </div>
+  <div>
+    <span>Fälligkeit: {{ task().dueDate | date : 'dd.MM.yyyy' }}</span>
+  </div>
 
   <div class="detail__actions">
     <button class="btn btn--primary" (click)="edit.emit()">

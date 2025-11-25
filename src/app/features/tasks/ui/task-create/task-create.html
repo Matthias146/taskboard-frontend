@@ -36,16 +36,15 @@
         placeholder="Was muss erledigt werden?"
         autofocus
       />
-
       @if (isInvalid(createForm.title) && (createForm.title().touched() || triedSubmit())) {
       <small class="form-field__error">Titel ist erforderlich.</small>
       }
     </div>
 
     <div class="form-field">
-      <label for="description" class="form-field__label"
-        >Beschreibung <span class="optional">(Optional)</span></label
-      >
+      <label for="description" class="form-field__label">
+        Beschreibung <span class="optional">(Optional)</span>
+      </label>
       <textarea
         id="description"
         [field]="createForm.description"
@@ -53,6 +52,13 @@
         placeholder="Füge Details oder Notizen hinzu..."
         rows="4"
       ></textarea>
+    </div>
+
+    <div class="form-field">
+      <label for="dueDate" class="form-field__label">
+        Fälligkeitsdatum <span class="optional">(Optional)</span>
+      </label>
+      <input id="dueDate" type="date" [field]="createForm.dueDate" class="form-field__input" />
     </div>
 
     <div class="modal__actions">

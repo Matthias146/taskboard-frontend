@@ -1,13 +1,15 @@
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { Injectable, effect, inject, signal, OnDestroy } from '@angular/core';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Task, TaskStatus } from './tasks.model';
+import { SocketService } from '../../../core/services/socket.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskService {
+export class TaskService implements OnDestroy {
   private http = inject(HttpClient);
+  private socketService = inject(SocketService);
 
   private readonly tasksResource = httpResource<Task[]>(() => ({
     url: `${environment.apiUrl}/tasks`,
@@ -17,6 +19,11 @@ export class TaskService {
   tasks = signal<Task[]>([]);
   isLoading = this.tasksResource.isLoading;
   error = this.tasksResource.error;
+
+  private socketSub = this.socketService.getTaskUpdates().subscribe(() => {
+    console.log('🔄 Refreshing Tasks via WebSocket...');
+    this.refresh();
+  });
 
   constructor() {
     effect(() => {
@@ -33,18 +40,24 @@ export class TaskService {
     this.tasksResource.reload();
   }
 
-  createTask(data: { title: string; description?: string; status?: TaskStatus }) {
+  createTask(data: { title: string; description?: string; dueDate?: string; status?: TaskStatus }) {
     return this.http.post<Task>(`${environment.apiUrl}/tasks`, {
       ...data,
+      dueDate: data.dueDate ? data.dueDate : undefined,
       status: data.status ?? TaskStatus.OPEN,
     });
   }
 
   updateTask(id: number, data: Partial<Task>) {
-    return this.http.patch<Task>(`http://localhost:3000/tasks/${id}`, data);
+    return this.http.patch<Task>(`${environment.apiUrl}/tasks/${id}`, data);
   }
 
   deleteTask(id: number) {
-    return this.http.delete(`http://localhost:3000/tasks/${id}`);
+    return this.http.delete(`${environment.apiUrl}/tasks/${id}`);
+  }
+
+  ngOnDestroy() {
+    this.socketSub.unsubscribe();
+    this.socketService.disconnect();
   }
 }

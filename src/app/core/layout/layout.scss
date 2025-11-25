@@ -87,13 +87,6 @@
 }
 
 @media (max-width: 640px) {
-  .layout {
-    grid-template-columns: 1fr;
-
-    &__sidebar {
-      display: none;
-    }
-  }
 
   .layout__content {
     padding: var(--space-4);

@@ -6,6 +6,7 @@ import { form, Field, required } from '@angular/forms/signals';
 interface TaskData {
   title: string;
   description: string;
+  dueDate: string;
 }
 
 @Component({
@@ -27,11 +28,12 @@ export class TaskCreate {
   model = signal<TaskData>({
     title: '',
     description: '',
+    dueDate: '',
   });
 
-  createForm = form(this.model as any, (f: any) => {
+  createForm = form(this.model, (f) => {
     required(f.title);
-  }) as any;
+  });
 
   hasError(field: any, kind: string): boolean {
     const errors = field().errors();
@@ -41,6 +43,10 @@ export class TaskCreate {
   isInvalid(field: any): boolean {
     const errors = field().errors();
     return Array.isArray(errors) && errors.length > 0;
+  }
+
+  close() {
+    this.saved.emit();
   }
 
   async submit(event: Event) {
@@ -65,9 +71,5 @@ export class TaskCreate {
     } finally {
       this.isSubmitting.set(false);
     }
-  }
-
-  close() {
-    this.saved.emit();
   }
 }

@@ -25,6 +25,11 @@
   </div>
 
   <div class="edit__field">
+    <label for="dueDate" class="edit__label">Fälligkeitsdatum</label>
+    <input id="dueDate" type="date" [field]="editForm.dueDate" class="edit__input" />
+  </div>
+
+  <div class="edit__field">
     <label for="status" class="edit__label">Status</label>
     <div class="select-wrapper">
       <select id="status" [field]="editForm.status" class="edit__select">

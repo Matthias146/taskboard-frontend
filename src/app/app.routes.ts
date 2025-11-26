@@ -30,6 +30,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'tasks', component: TasksBoard, title: 'Deine Tasks' },
       { path: 'dashboard', component: Dashboard, title: 'Dashboard' },
+      {
+        path: 'contacts',
+        loadComponent: () =>
+          import('./features/contacts/ui/contacts-list/contacts-list').then((m) => m.ContactsList),
+      },
     ],
   },
 

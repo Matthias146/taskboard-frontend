@@ -22,8 +22,13 @@
     <p class="detail__empty">Keine Beschreibung vorhanden.</p>
     }
   </div>
-  <div>
-    <span>Fälligkeit: {{ task().dueDate | date : 'dd.MM.yyyy' }}</span>
+  <div class="detail__section">
+    <span class="detail__label">Fälligkeitsdatum</span>
+    @if (task().dueDate) {
+    <div class="detail__date">📅 {{ task().dueDate | date : 'dd.MM.yyyy' }}</div>
+    } @else {
+    <p class="detail__empty">Kein Datum gesetzt.</p>
+    }
   </div>
 
   <div class="detail__actions">

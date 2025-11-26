@@ -51,7 +51,7 @@ export class Auth {
     } catch (err) {
       console.error('❌ loadProfile() fehlgeschlagen:', err);
       this.logout();
-      await this.router.navigateByUrl('/login');
+      await this.router.navigate(['/login']);
     }
   }
 

@@ -8,6 +8,7 @@ interface TaskEditData {
   title: string;
   description: string;
   status: TaskStatus;
+  dueDate: string;
 }
 
 @Component({
@@ -33,6 +34,7 @@ export class TaskDetailEdit {
     title: '',
     description: '',
     status: TaskStatus.OPEN,
+    dueDate: '',
   });
 
   editForm = form(this.model as any, (f: any) => {
@@ -44,10 +46,13 @@ export class TaskDetailEdit {
       const t = this.task();
       if (!t) return;
 
+      const dateValue = t.dueDate ? new Date(t.dueDate).toISOString().split('T')[0] : '';
+
       this.model.set({
         title: t.title,
         description: t.description ?? '',
         status: t.status,
+        dueDate: dateValue,
       });
     });
   }
@@ -66,7 +71,6 @@ export class TaskDetailEdit {
     event.preventDefault();
     this.triedSubmit.set(true);
 
-    // Validierung prüfen
     if (this.isInvalid(this.editForm.title)) {
       return;
     }
@@ -80,6 +84,7 @@ export class TaskDetailEdit {
           title: formData.title,
           description: formData.description,
           status: formData.status,
+          dueDate: formData.dueDate ? formData.dueDate : undefined,
         })
       );
 

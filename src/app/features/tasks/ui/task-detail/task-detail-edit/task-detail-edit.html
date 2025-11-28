@@ -25,6 +25,18 @@
   </div>
 
   <div class="edit__field">
+    <label for="contact" class="edit__label">Zugewiesen an</label>
+    <div class="select-wrapper">
+      <select id="contact" [field]="editForm.contactId" class="edit__select">
+        <option [ngValue]="null">-- Niemand --</option>
+        @for (contact of contacts(); track contact.id) {
+        <option [ngValue]="contact.id">{{ contact.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="edit__field">
     <label for="dueDate" class="edit__label">Fälligkeitsdatum</label>
     <input id="dueDate" type="date" [field]="editForm.dueDate" class="edit__input" />
   </div>

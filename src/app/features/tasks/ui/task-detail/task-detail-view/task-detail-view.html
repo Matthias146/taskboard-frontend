@@ -31,6 +31,13 @@
     }
   </div>
 
+  @if (task().contact) {
+  <div class="detail__section">
+    <span class="detail__label">Zugewiesen an</span>
+    <div class="assigned-contact">👤 {{ task().contact?.name }}</div>
+  </div>
+  }
+
   <div class="detail__actions">
     <button class="btn btn--primary" (click)="edit.emit()">
       <svg

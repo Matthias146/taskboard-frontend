@@ -3,27 +3,32 @@ import { TaskService } from '../../../data/Tasks';
 import { Task, TaskStatus } from '../../../data/tasks.model';
 import { firstValueFrom } from 'rxjs';
 import { form, Field, required } from '@angular/forms/signals';
+import { Contacts } from '../../../../contacts/data/contacts';
+import { FormsModule } from '@angular/forms';
 
 interface TaskEditData {
   title: string;
   description: string;
   status: TaskStatus;
   dueDate: string;
+  contactId: number | null;
 }
 
 @Component({
   selector: 'app-task-detail-edit',
   standalone: true,
-  imports: [Field],
+  imports: [Field, FormsModule],
   templateUrl: './task-detail-edit.html',
   styleUrl: './task-detail-edit.scss',
 })
 export class TaskDetailEdit {
   private tasksService = inject(TaskService);
+  private contactsService = inject(Contacts);
 
   task = input.required<Task>();
   saved = output<Task>();
   cancel = output<void>();
+  contacts = this.contactsService.contacts;
 
   isSaving = signal(false);
   triedSubmit = signal(false);
@@ -35,6 +40,7 @@ export class TaskDetailEdit {
     description: '',
     status: TaskStatus.OPEN,
     dueDate: '',
+    contactId: null,
   });
 
   editForm = form(this.model as any, (f: any) => {
@@ -53,6 +59,7 @@ export class TaskDetailEdit {
         description: t.description ?? '',
         status: t.status,
         dueDate: dateValue,
+        contactId: t.contact?.id ?? null,
       });
     });
   }
@@ -85,6 +92,7 @@ export class TaskDetailEdit {
           description: formData.description,
           status: formData.status,
           dueDate: formData.dueDate ? formData.dueDate : undefined,
+          contactId: formData.contactId ? formData.contactId : undefined,
         })
       );
 

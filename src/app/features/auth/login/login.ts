@@ -29,13 +29,13 @@ export class Login {
     password: '',
   });
 
-  loginForm = form(this.model, (f) => {
+  loginForm = form(this.model as any, (f: any) => {
     required(f.email);
     email(f.email);
 
     required(f.password);
     minLength(f.password, 6);
-  });
+  }) as any;
 
   hasError(fieldSignal: any, kind: string): boolean {
     const errors = fieldSignal().errors();

@@ -26,7 +26,7 @@ export class ContactCreate {
     this.closeModal.emit();
   }
 
-  form = form(this.model, (f) => {
+  form = form(this.model as any, (f: any) => {
     required(f.name);
   }) as any;
 

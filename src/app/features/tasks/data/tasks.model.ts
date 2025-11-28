@@ -1,3 +1,5 @@
+import { Contact } from '../../contacts/data/contacts.model';
+
 export enum TaskStatus {
   OPEN = 'open',
   IN_PROGRESS = 'in_progress',
@@ -12,4 +14,6 @@ export interface Task {
   createdAt: string;
   updatedAt: string;
   dueDate?: string;
+  contact?: Contact;
+  contactId?: number;
 }

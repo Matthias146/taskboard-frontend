@@ -5,7 +5,7 @@
       <p class="dashboard__subtitle">Willkommen zurück auf deinem TaskBoard.</p>
     </div>
 
-    <button class="btn-icon-only">📅</button>
+    <div class="date-badge">📅 {{ now | date : 'mediumDate' }}</div>
   </header>
 
   <section class="dashboard__grid">
@@ -15,8 +15,8 @@
         <h3 class="stat-card__title">Offene Tasks</h3>
       </div>
       <div class="stat-card__body">
-        <p class="stat-card__number">3</p>
-        <span class="stat-card__trend positive">+2 diese Woche</span>
+        <p class="stat-card__number">{{ countOpen() }}</p>
+        <span class="stat-card__trend positive"> {{ newThisWeek() }} neu diese Woche </span>
       </div>
     </div>
 
@@ -26,8 +26,8 @@
         <h3 class="stat-card__title">In Bearbeitung</h3>
       </div>
       <div class="stat-card__body">
-        <p class="stat-card__number">5</p>
-        <span class="stat-card__trend">Läuft nach Plan</span>
+        <p class="stat-card__number">{{ countProgress() }}</p>
+        <span class="stat-card__trend">Aktuell in Arbeit</span>
       </div>
     </div>
 
@@ -37,8 +37,8 @@
         <h3 class="stat-card__title">Erledigt</h3>
       </div>
       <div class="stat-card__body">
-        <p class="stat-card__number">12</p>
-        <span class="stat-card__trend positive">+5 seit gestern</span>
+        <p class="stat-card__number">{{ countDone() }}</p>
+        <span class="stat-card__trend positive">Gute Arbeit!</span>
       </div>
     </div>
 
@@ -48,8 +48,8 @@
         <h3 class="stat-card__title">Kontakte</h3>
       </div>
       <div class="stat-card__body">
-        <p class="stat-card__number">21</p>
-        <span class="stat-card__trend">Alle aktiv</span>
+        <p class="stat-card__number">{{ countContacts() }}</p>
+        <span class="stat-card__trend">Im Adressbuch</span>
       </div>
     </div>
   </section>

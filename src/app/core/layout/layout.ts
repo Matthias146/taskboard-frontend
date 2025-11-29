@@ -18,7 +18,6 @@ export class Layout {
   collapsed = signal(false);
 
   constructor() {
-    // direkt prüfen beim Start
     this.updateCollapseState(window.innerWidth);
   }
 
@@ -28,9 +27,9 @@ export class Layout {
   }
 
   private updateCollapseState(width: number) {
-    if (width < 900 && !this.collapsed()) {
+    if (width < 1026 && !this.collapsed()) {
       this.collapsed.set(true);
-    } else if (width >= 900 && this.collapsed()) {
+    } else if (width >= 1026 && this.collapsed()) {
       this.collapsed.set(false);
     }
   }

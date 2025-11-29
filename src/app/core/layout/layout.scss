@@ -59,7 +59,6 @@
   &__content {
     flex: 1;
     padding: var(--space-6);
-    width: 100%;
   }
 
   &__container {
@@ -94,5 +93,28 @@
 
   .layout__header {
     padding: var(--space-3) var(--space-4);
+  }
+}
+
+@media (max-width: 750px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+
+    &--collapsed {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .layout__sidebar {
+    grid-row: 2;
+    border-right: none;
+    border-top: 1px solid var(--color-border);
+    height: 60px;
+    overflow: hidden;
+  }
+
+  .layout__main {
+    grid-row: 1;
   }
 }

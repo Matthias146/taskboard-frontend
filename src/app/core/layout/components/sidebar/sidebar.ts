@@ -15,6 +15,5 @@ export class Sidebar {
     { icon: '🏠', label: 'Dashboard', path: '/dashboard' },
     { icon: '✅', label: 'Tasks', path: '/tasks' },
     { icon: '👥', label: 'Kontakte', path: '/contacts' },
-    { icon: '⚙️', label: 'Einstellungen', path: '/settings' },
   ];
 }

@@ -26,7 +26,7 @@ export class ContactCreate {
     this.closeModal.emit();
   }
 
-  form = form(this.model as any, (f: any) => {
+  form = form(this.model, (f) => {
     required(f.name);
   }) as any;
 
@@ -50,15 +50,7 @@ export class ContactCreate {
 
     this.isSubmitting.set(true);
     try {
-      const data = this.model();
-      const cleanData = {
-        name: data.name,
-        email: data.email || undefined,
-        phone: data.phone || undefined,
-        address: data.address || undefined,
-      };
-
-      await firstValueFrom(this.contactsService.create(cleanData));
+      await firstValueFrom(this.contactsService.create(this.model()));
       this.contactsService.refresh();
       this.closeModal.emit();
     } finally {

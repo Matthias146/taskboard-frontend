@@ -40,21 +40,15 @@ export class TaskService implements OnDestroy {
     this.tasksResource.reload();
   }
 
-  createTask(data: {
-    title: string;
-    description?: string;
-    status?: TaskStatus;
-    dueDate?: string;
-    contactId?: number | null;
-  }) {
+  createTask(data: { title: string; description?: string; dueDate?: string; status?: TaskStatus }) {
     return this.http.post<Task>(`${environment.apiUrl}/tasks`, {
       ...data,
+      dueDate: data.dueDate ? data.dueDate : undefined,
       status: data.status ?? TaskStatus.OPEN,
-      contactId: data.contactId ?? undefined,
     });
   }
 
-  updateTask(id: number, data: Partial<Task> & { contactId?: number | null }) {
+  updateTask(id: number, data: Partial<Task>) {
     return this.http.patch<Task>(`${environment.apiUrl}/tasks/${id}`, data);
   }
 

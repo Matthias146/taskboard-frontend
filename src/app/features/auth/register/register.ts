@@ -34,7 +34,7 @@ export class Register {
     confirmPassword: '',
   });
 
-  registerForm = form(this.model as any, (f: any) => {
+  registerForm = form(this.model, (f) => {
     required(f.name);
 
     required(f.email);
@@ -44,7 +44,7 @@ export class Register {
     minLength(f.password, 6);
 
     required(f.confirmPassword);
-  }) as any;
+  });
 
   hasError(field: any, kind: string): boolean {
     const errors = field().errors();

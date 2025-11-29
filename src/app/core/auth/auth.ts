@@ -31,7 +31,7 @@ export class Auth {
       })
     );
 
-    if (!res?.access_token) throw new Error('❌ Kein access_token erhalten');
+    if (!res?.access_token) throw new Error('Kein access_token erhalten');
 
     this.token.set(res.access_token);
     localStorage.setItem('jwt', res.access_token);
@@ -49,7 +49,7 @@ export class Auth {
       const user = await firstValueFrom(this.http.get<User>(`${environment.apiUrl}/auth/me`));
       this.user.set(user);
     } catch (err) {
-      console.error('❌ loadProfile() fehlgeschlagen:', err);
+      console.error('loadProfile() fehlgeschlagen:', err);
       this.logout();
       await this.router.navigate(['/login']);
     }

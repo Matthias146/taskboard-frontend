@@ -23,7 +23,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 && !isPublicEndpoint) {
-        console.warn('⚠️ Session abgelaufen – Logout wird erzwungen.');
+        console.warn('Session abgelaufen – Logout wird erzwungen.');
 
         auth.logout();
 

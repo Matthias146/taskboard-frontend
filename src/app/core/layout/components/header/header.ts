@@ -1,11 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Auth } from '../../../auth/auth';
-import { Router, RouterLink } from '@angular/router';
-import { ThemeToogle } from '../../../../shared/theme/theme-toogle/theme-toogle';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

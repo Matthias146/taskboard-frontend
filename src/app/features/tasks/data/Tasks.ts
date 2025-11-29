@@ -21,7 +21,7 @@ export class TaskService implements OnDestroy {
   error = this.tasksResource.error;
 
   private socketSub = this.socketService.getTaskUpdates().subscribe(() => {
-    console.log('🔄 Refreshing Tasks via WebSocket...');
+    console.log('Refreshing Tasks via WebSocket...');
     this.refresh();
   });
 

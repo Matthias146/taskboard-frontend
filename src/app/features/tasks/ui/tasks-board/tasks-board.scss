@@ -1,35 +1,25 @@
-/* ========================================
-   ANIMATIONS
-======================================== */
 @keyframes slideUpFade {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========================================
-   LAYOUT
-======================================== */
 .board {
   display: flex;
   flex-direction: column;
   height: 100%;
   max-height: 100%;
-  /* Padding für den Inhalt */
   padding: 0 var(--space-6) var(--space-6) var(--space-6);
   gap: var(--space-6);
   color: var(--color-text);
-  /* Overflow hidden entfernt, damit Sticky im Parent-Scroll-Container funktioniert */
 }
 
-/* Header -------------------------------------------------- */
 .board__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 
-  /* --- STICKY FIX --- */
   position: sticky;
-  top: 68px; /* Anpassen je nach App-Header Höhe */
+  top: 68px;
   z-index: 30;
 
   background: color-mix(in srgb, var(--color-bg), transparent 5%);
@@ -38,7 +28,6 @@
 
   border-bottom: 1px solid var(--color-border);
 
-  /* Full-Width Hack */
   margin: 0 calc(var(--space-6) * -1);
   padding: var(--space-6);
 
@@ -58,7 +47,6 @@
   font-size: var(--font-size-sm);
 }
 
-/* Button Icon Hack */
 .btn .icon {
   font-weight: 700;
   margin-right: 6px;
@@ -66,7 +54,6 @@
   line-height: 1;
 }
 
-/* Columns Grid ------------------------------------------- */
 .board__columns {
   flex: 1;
   min-height: 0;
@@ -78,41 +65,34 @@
 
   margin-top: var(--space-2);
 
-  /* Responsive: Tablet */
   @media (max-width: 1100px) {
     grid-template-columns: repeat(2, 1fr);
     overflow-x: auto;
     padding-bottom: var(--space-2);
   }
 
-  /* Responsive: Mobile (Swimlane Layout) */
   @media (max-width: 750px) {
-    /* Wir erzwingen eine Reihe (Row), egal wie eng es ist */
     display: flex;
     flex-direction: row;
 
-    /* Scroll-Snap Setup für App-Feeling */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-padding: 0 var(--space-6); /* Sorgt dafür, dass die Karte nicht am Rand klebt beim Snappen */
+    scroll-padding: 0 var(--space-6);
 
-    /* Padding damit man die letzte Karte ganz sehen kann */
     padding-right: var(--space-6);
     padding-bottom: var(--space-4);
 
-    /* Scrollbar verstecken */
     scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }
 
     .board__column {
       height: 100%;
 
-      /* ABSOLUT KRITISCH: */
-      flex-shrink: 0; /* 1. Verhindert das Zusammenquetschen! */
-      min-width: 85vw; /* 2. Garantiert eine lesbare Mindestbreite (85% des Screens) */
-      max-width: 350px; /* Optional: Nicht zu breit auf Tablets im Portrait Mode */
+      flex-shrink: 0;
+      min-width: 85vw;
+      max-width: 350px;
 
-      scroll-snap-align: center; /* Rastet mittig ein */
+      scroll-snap-align: center;
       margin-right: var(--space-4);
     }
 
@@ -122,7 +102,6 @@
   }
 }
 
-/* Animation für die Spalten */
 .board__column {
   height: 100%;
   opacity: 0;

@@ -72,9 +72,7 @@ export class Login {
       await this.router.navigateByUrl('/dashboard');
     } catch (err: any) {
       const msg =
-        err?.error?.message ??
-        err?.message ??
-        '❌ Login fehlgeschlagen. Bitte überprüfe deine Daten.';
+        err?.error?.message ?? err?.message ?? 'Login fehlgeschlagen. Bitte überprüfe deine Daten.';
       this.error.set(msg);
     } finally {
       this.loading.set(false);

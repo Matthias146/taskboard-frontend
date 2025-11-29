@@ -3,7 +3,6 @@
     <h2 class="login__title">Anmelden</h2>
 
     <form class="login__form" (submit)="onSubmit($event)" novalidate>
-      <!-- E-Mail -->
       <div class="form-field">
         <label for="email" class="form-field__label">E-Mail</label>
 
@@ -23,7 +22,6 @@
         }
       </div>
 
-      <!-- Passwort -->
       <div class="form-field">
         <label for="password" class="form-field__label">Passwort</label>
         <input
@@ -43,7 +41,7 @@
       </div>
 
       <button class="btn btn--primary login__btn" type="submit" [disabled]="loading()">
-        @if (loading()) { ⏳ Einloggen... } @else { 🔑 Login }
+        @if (loading()) { Einloggen... } @else { Login }
       </button>
     </form>
 

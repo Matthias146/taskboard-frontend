@@ -13,7 +13,7 @@ export interface Task {
   status: TaskStatus;
   createdAt: string;
   updatedAt: string;
-  dueDate?: string;
-  contact?: Contact;
-  contactId?: number;
+  dueDate?: string | null;
+  contact?: Contact | null;
+  contactId?: number | null;
 }

@@ -50,7 +50,15 @@ export class ContactCreate {
 
     this.isSubmitting.set(true);
     try {
-      await firstValueFrom(this.contactsService.create(this.model()));
+      const data = this.model();
+      const cleanData = {
+        name: data.name,
+        email: data.email || undefined,
+        phone: data.phone || undefined,
+        address: data.address || undefined,
+      };
+
+      await firstValueFrom(this.contactsService.create(cleanData));
       this.contactsService.refresh();
       this.closeModal.emit();
     } finally {

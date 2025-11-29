@@ -1,0 +1,127 @@
+@charset "UTF-8";
+/* ========================================
+   ANIMATIONS
+======================================== */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ========================================
+   LAYOUT
+======================================== */
+.board {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  /* Padding für den Inhalt */
+  padding: 0 var(--space-6) var(--space-6) var(--space-6);
+  gap: var(--space-6);
+  color: var(--color-text);
+  /* Overflow hidden entfernt, damit Sticky im Parent-Scroll-Container funktioniert */
+}
+
+/* Header -------------------------------------------------- */
+.board__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  /* --- STICKY FIX --- */
+  position: sticky;
+  top: 68px; /* Anpassen je nach App-Header Höhe */
+  z-index: 30;
+  background: color-mix(in srgb, var(--color-bg), transparent 5%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  /* Full-Width Hack */
+  margin: 0 calc(var(--space-6) * -1);
+  padding: var(--space-6);
+  flex-shrink: 0;
+}
+
+.board__title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.board__subtitle {
+  margin: var(--space-1) 0 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* Button Icon Hack */
+.btn .icon {
+  font-weight: 700;
+  margin-right: 6px;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* Columns Grid ------------------------------------------- */
+.board__columns {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+  margin-top: var(--space-2);
+  /* Responsive: Tablet */
+  /* Responsive: Mobile (Swimlane Layout) */
+}
+@media (max-width: 1100px) {
+  .board__columns {
+    grid-template-columns: repeat(2, 1fr);
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+  }
+}
+@media (max-width: 750px) {
+  .board__columns {
+    /* Wir erzwingen eine Reihe (Row), egal wie eng es ist */
+    display: flex;
+    flex-direction: row;
+    /* Scroll-Snap Setup für App-Feeling */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 var(--space-6); /* Sorgt dafür, dass die Karte nicht am Rand klebt beim Snappen */
+    /* Padding damit man die letzte Karte ganz sehen kann */
+    padding-right: var(--space-6);
+    padding-bottom: var(--space-4);
+    /* Scrollbar verstecken */
+    scrollbar-width: none;
+  }
+  .board__columns::-webkit-scrollbar {
+    display: none;
+  }
+  .board__columns .board__column {
+    height: 100%;
+    /* ABSOLUT KRITISCH: */
+    flex-shrink: 0; /* 1. Verhindert das Zusammenquetschen! */
+    min-width: 85vw; /* 2. Garantiert eine lesbare Mindestbreite (85% des Screens) */
+    max-width: 350px; /* Optional: Nicht zu breit auf Tablets im Portrait Mode */
+    scroll-snap-align: center; /* Rastet mittig ein */
+    margin-right: var(--space-4);
+  }
+  .board__columns .board__column:last-child {
+    margin-right: 0;
+  }
+}
+
+/* Animation für die Spalten */
+.board__column {
+  height: 100%;
+  opacity: 0;
+  animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--delay, 0ms);
+}/*# sourceMappingURL=tasks-board.css.map */

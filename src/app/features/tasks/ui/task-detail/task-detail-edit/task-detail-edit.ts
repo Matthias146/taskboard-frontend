@@ -91,8 +91,8 @@ export class TaskDetailEdit {
           title: formData.title,
           description: formData.description,
           status: formData.status,
-          dueDate: formData.dueDate ? formData.dueDate : undefined,
-          contactId: formData.contactId ? formData.contactId : undefined,
+          dueDate: formData.dueDate || null,
+          contactId: formData.contactId,
         })
       );
 
